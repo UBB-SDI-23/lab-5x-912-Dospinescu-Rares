@@ -1,0 +1,5 @@
+For creating a diagram with the models:
+python3 manage.py graph_models -a -I Movie,Actor,MoviesAndActors,Review,BoxOffice -o DjangoDatabase.png
+
+For creating a diagram with everything:
+python3 manage.py graph_models -a -g -o ApplicationUMLDiagram.png
