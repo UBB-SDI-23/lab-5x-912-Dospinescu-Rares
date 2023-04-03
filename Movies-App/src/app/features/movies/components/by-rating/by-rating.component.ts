@@ -16,7 +16,6 @@ export class MoviesByRatingComponent {
   ngOnInit(): void {
     this.apiSvc.getAllMoviesByRating().subscribe((moviesByRating: MovieRating[]) => {
         this.moviesByRating = moviesByRating;
-        this.moviesByRating.sort((a, b) => (a.title < b.title ? -1 : 1));
     });
   }
 }
