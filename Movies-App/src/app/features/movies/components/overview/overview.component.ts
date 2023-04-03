@@ -16,6 +16,7 @@ export class MoviesOverviewComponent implements OnInit {
   ngOnInit(): void {
     this.apiSvc.getAllMovies().subscribe((movies: Movie[]) => {
         this.movies = movies;
+        this.movies.sort((a, b) => (a.title < b.title ? -1 : 1));
     });
   }
 
