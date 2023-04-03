@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist",
+            "outputPath": "dist/movies-app",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -23,7 +23,7 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "public/_redirects"
+              "src/_redirects"
             ],
             "styles": [
               "src/styles.css"
@@ -86,7 +86,7 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "public/_redirects"
+              "src/_redirects"
             ],
             "styles": [
               "src/styles.css"
