@@ -1,0 +1,58 @@
+<ng-container *ngIf="movie">
+    <h2>Details for movie with ID {{movie.id}}</h2>
+
+    <thead>
+        <tr>
+            <td>Id</td>
+            <td>Title</td>
+            <td>Release Date</td>
+            <td>Duration in Minutes</td>
+            <td>Description</td>
+            <td>PG Rating</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{movie.id}}</td>
+            <td>{{movie.title}}</td>
+            <td>{{movie.release_date}}</td>
+            <td>{{movie.duration_in_minutes}}</td>
+            <td>{{movie.description}}</td>
+            <td>{{movie.pgRating}}</td>
+        </tr>
+    </tbody>
+
+    <br><br>
+
+    <button (click)="deleteMovie(movie.id)" style="background-color:red; border-color:white; color:white;">Delete movie</button>
+
+    <br><br><br>
+
+    <form (submit)="updateMovie()">
+        <p>
+            <label for="title" class="label">Title: </label>
+            <input id="title" name="title" [(ngModel)]="title">
+        </p>
+        <p>
+            <label for="release_date" class="label">Release Date: </label>
+            <input id="release_date" name="release_date" [(ngModel)]="release_date">
+        </p>
+        <p>
+            <label for="duration_in_minutes" class="label">Duration In Minutes: </label>
+            <input id="duration_in_minutes" name="duration_in_minutes" [(ngModel)]="duration_in_minutes">
+        </p>
+        <p>
+            <label for="description" class="label">Description: </label>
+            <input id="description" name="description" [(ngModel)]="description">
+        </p>
+        <p>
+            <label for="pgRating" class="label">PG Rating: </label>
+            <input id="pgRating" name="pgRating" [(ngModel)]="pgRating">
+        </p>
+        <button type="submit">Update</button>
+    </form>
+</ng-container>
+
+<ng-container *ngIf="!movie">
+    <h2>Movie with ID {{movieId}} does not exist!</h2>
+</ng-container>
