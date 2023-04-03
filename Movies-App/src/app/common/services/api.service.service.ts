@@ -8,7 +8,7 @@ import { AddMovieDto, Movie, MovieRating } from 'src/app/features/movies/compone
 })
 export class ApiService {
 
-  baseUrl = 'http://ec2-16-16-76-22.eu-north-1.compute.amazonaws.com/api';
+  baseUrl = '/api';
   constructor(private http: HttpClient) { }
 
   getAllMovies(): Observable<Movie[]> {
