@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './common/home/home.component';
 import { MoviesOverviewComponent } from './features/movies/components/overview/overview.component';
 import { MovieDetailsComponent } from './features/movies/components/details/details.component';
-import { AddMovieComponent } from './features/movies/add/add.component';
+import { AddMovieComponent } from './features/movies/components/add/add.component';
 import { MoviesByRatingComponent } from './features/movies/components/by-rating/by-rating.component';
 
 const routes: Routes = [

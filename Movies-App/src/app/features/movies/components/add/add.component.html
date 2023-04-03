@@ -1,0 +1,24 @@
+<h2>Add movie</h2>
+<form (submit)="addMovie()">
+    <p>
+        <label for="title" class="label">Title: </label>
+        <input id="title" name="title" [(ngModel)]="title">
+    </p>
+    <p>
+        <label for="release_date" class="label">Release Date: </label>
+        <input id="release_date" name="release_date" [(ngModel)]="release_date">
+    </p>
+    <p>
+        <label for="duration_in_minutes" class="label">Duration In Minutes: </label>
+        <input id="duration_in_minutes" name="duration_in_minutes" [(ngModel)]="duration_in_minutes">
+    </p>
+    <p>
+        <label for="description" class="label">Description: </label>
+        <input id="description" name="description" [(ngModel)]="description">
+    </p>
+    <p>
+        <label for="pgRating" class="label">PG Rating: </label>
+        <input id="pgRating" name="pgRating" [(ngModel)]="pgRating">
+    </p>
+    <button type="submit">Add Movie</button>
+</form>

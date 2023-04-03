@@ -12,11 +12,11 @@ export class ApiService {
   constructor(private http: HttpClient) { }
 
   getAllMovies(): Observable<Movie[]> {
-    return this.http.get(`${this.baseUrl}/movie/all`) as Observable<Movie[]>;
+    return this.http.get(`${this.baseUrl}/movie/all/`) as Observable<Movie[]>;
   }
 
   getMovie(movieId: string): Observable<Movie> {
-    return this.http.get(`${this.baseUrl}/movie/${movieId}`) as Observable<Movie>;
+    return this.http.get(`${this.baseUrl}/movie/${movieId}/`) as Observable<Movie>;
   }
 
   addMovie(movie: AddMovieDto): Observable<Movie> {
@@ -32,6 +32,6 @@ export class ApiService {
   }
 
   getAllMoviesByRating(): Observable<MovieRating[]> {
-    return this.http.get(`${this.baseUrl}/movie/rating`) as Observable<MovieRating[]>;
+    return this.http.get(`${this.baseUrl}/movie/rating/`) as Observable<MovieRating[]>;
   }
 }

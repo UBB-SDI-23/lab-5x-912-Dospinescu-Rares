@@ -6,12 +6,15 @@ table, th, td {
 form {
   display: table;
 }
+
 p {
   display: table-row;
 }
+
 label {
   display: table-cell;
 }
+
 input {
   display: table-cell;
   width: 1000px;

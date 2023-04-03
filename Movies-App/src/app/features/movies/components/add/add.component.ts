@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ApiService } from 'src/app/common/services/api.service.service';
-import { AddMovieDto, Movie } from '../components/overview/models/movie.models';
+import { AddMovieDto, Movie } from '../overview/models/movie.models';
 import { Router } from '@angular/router';
 
 @Component({
