@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Movie } from './models/movie.models';
+import { Movie } from '../models/movie.models';
 import { ApiService } from 'src/app/common/services/api.service.service';
 import { Router } from '@angular/router';
 
@@ -15,8 +15,7 @@ export class MoviesOverviewComponent implements OnInit {
 
   ngOnInit(): void {
     this.apiSvc.getAllMovies().subscribe((movies: Movie[]) => {
-        this.movies = movies;
-        this.movies.sort((a, b) => (a.title < b.title ? -1 : 1));
+      this.movies = movies;
     });
   }
 
@@ -26,6 +25,10 @@ export class MoviesOverviewComponent implements OnInit {
 
   goToAddMoviePage() {
     this.router.navigateByUrl(`/movies/add`);
+  }
+
+  sortMovies() {
+    this.movies.sort((a, b) => (a.title < b.title ? -1 : 1));
   }
 
   goToMovieEdit(movieId: string) {

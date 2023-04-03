@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/common/services/api.service.service';
-import { AddMovieDto, Movie } from '../overview/models/movie.models';
+import { AddMovieDto, Movie } from '../models/movie.models';
 
 @Component({
   selector: 'app-details',

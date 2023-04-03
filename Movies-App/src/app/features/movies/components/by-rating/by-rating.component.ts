@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/common/services/api.service.service';
-import { MovieRating } from '../overview/models/movie.models';
+import { MovieRating } from '../models/movie.models';
 
 @Component({
   selector: 'app-by-rating',

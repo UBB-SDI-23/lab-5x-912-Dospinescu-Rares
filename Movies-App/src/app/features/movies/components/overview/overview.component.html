@@ -1,7 +1,7 @@
 <h2>Movies</h2>
 
 <button (click)="goToAddMoviePage()">Add movie</button><br>
-<button (click)="goToAddMoviesByRating()">See movies sorted by rating</button><br><br>
+<button (click)="sortMovies()">Sort movies by title</button><br><br>
 
 <table style="width:100%">
     <thead>
@@ -25,7 +25,7 @@
             <td>{{movie.description}}</td>
             <td>{{movie.pgRating}}</td>
             <td>
-                <a (click)="goToMovieDetails(movie.id)"><img src="https://uxwing.com/wp-content/themes/uxwing/download/editing-user-action/modify-icon.png" alt="editButton" style="width:20px; height:20px;"></a>
+                <a (click)="goToMovieDetails(movie.id)"><img src="https://uxwing.com/wp-content/themes/uxwing/download/editing-user-action/modify-icon.png" alt="editButton" style="width:20px; height:20px; margin-left:3px; margin-right:5px;"></a>
                 <a (click)="goToMovieDetails(movie.id)"><img src="https://cdn-icons-png.flaticon.com/512/1/1755.png" alt="detailsButton" style="width:20px; height:20px;"></a>
                 <a (click)="deleteMovie(i, movie.id)"><img src="https://image.pngaaa.com/450/1462450-middle.png" alt="deleteButton" style="width:20px; height:20px;"></a>
             </td>

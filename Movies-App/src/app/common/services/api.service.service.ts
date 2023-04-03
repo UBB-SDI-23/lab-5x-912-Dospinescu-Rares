@@ -1,14 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AddMovieDto, Movie, MovieRating } from 'src/app/features/movies/components/overview/models/movie.models';
+import { AddMovieDto, Movie, MovieRating } from 'src/app/features/movies/components/models/movie.models';
+import { AddReviewDto, Review } from 'src/app/features/reviews/components/models/review.models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  baseUrl = '/api';
+  baseUrl = 'http://ec2-16-16-76-22.eu-north-1.compute.amazonaws.com/api';
+  // baseUrl = '/api';
   constructor(private http: HttpClient) { }
 
   getAllMovies(): Observable<Movie[]> {
@@ -33,5 +35,17 @@ export class ApiService {
 
   getAllMoviesByRating(): Observable<MovieRating[]> {
     return this.http.get(`${this.baseUrl}/movie/rating/`) as Observable<MovieRating[]>;
+  }
+
+  getReviews(): Observable<Review[]> {
+    return this.http.get(`${this.baseUrl}/review/`) as Observable<Review[]>;
+  }
+
+  addReview(review: AddReviewDto): Observable<Review> {
+    return this.http.post(`${this.baseUrl}/review/`, review) as Observable<Review>;
+  }
+
+  deleteReview(reviewId: string): Observable<Review> {
+    return this.http.delete(`${this.baseUrl}/review/${reviewId}/`) as Observable<Review>;
   }
 }
