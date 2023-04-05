@@ -9,8 +9,8 @@ import { AddReviewDto, Review } from 'src/app/features/reviews/components/models
 })
 export class ApiService {
 
-  // baseUrl = 'http://ec2-16-16-76-22.eu-north-1.compute.amazonaws.com/api'; // Use this when deploying to netlify
-   baseUrl = '/api'; // Use this when working with Microsoft Visual Studio Code
+   baseUrl = 'http://ec2-13-50-246-75.eu-north-1.compute.amazonaws.com/api'; // Use this when deploying to netlify
+  // baseUrl = '/api'; // Use this when working with Microsoft Visual Studio Code
   constructor(private http: HttpClient) { }
 
   getAllMovies(): Observable<Movie[]> {
