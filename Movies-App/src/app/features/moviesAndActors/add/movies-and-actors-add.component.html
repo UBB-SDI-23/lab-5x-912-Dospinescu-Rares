@@ -1,0 +1,43 @@
+<body class="bg-gray-700 text-white h-screen">
+    <button (click)="goBack()" class="absolute text-white font-bold py-2 px-4 text-md rounded focus:outline-none focus:shadow-outline hover:bg-gray-900 mt-3 mx-2">Go Back</button>
+    <div class="flex flex-wrap items-center justify-center">
+        <div class="container mx-auto max-w-md">
+            <form (submit)="addReview()" class="flex justify-center flex-col mt-4">
+                <h2 class="text-center text-2xl font-bold mb-6">Fill in the fields in order to add a relation between movies and actors!</h2>
+                <div class="flex flex-col">
+                    <div class="mb-4">
+                        <label for="movie" class="font-bold mb-2">Movie Title:</label>
+                        <input id="movie" name="movie" [formControl]="movie" type="text"
+                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <div class="absolute z-50 bg-white border rounded mt-2 w-full max-w-md text-center" *ngIf="movies.length > 0">
+                            <div *ngFor="let movie of movies" class="px-3 py-2 hover:bg-gray-200 text-gray-700" (click)="onMovieSelect(movie)">
+                                {{ movie.title }}
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="mb-4">
+                        <label for="actor" class="font-bold mb-2">Actor Full Name:</label>
+                        <input id="actor" name="actor" [formControl]="actor" type="text"
+                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <div class="absolute z-50 bg-white border rounded mt-2 w-full max-w-md text-center" *ngIf="actors.length > 0">
+                            <div *ngFor="let actor of actors" class="px-3 py-2 hover:bg-gray-200 text-gray-700" (click)="onActorSelect(actor)">
+                                {{ actor.first_name }} {{ actor.last_name }}
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="mb-4">
+                        <label for="total_hours_filmed" class="font-bold mb-2">Total Hours Filmed For This Movie: </label>
+                        <input id="total_hours_filmed" name="total_hours_filmed" [(ngModel)]="total_hours_filmed" type="string" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                    <div class="mb-4">
+                        <label for="director_notes" class="font-bold mb-2">Director Notes: </label>
+                        <textarea id="director_notes" name="director_notes" [(ngModel)]="director_notes" type="text" rows="4" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+                    </div>
+                    <div class="flex justify-center">
+                        <button type="submit" class="bg-white text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Add Relation</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>

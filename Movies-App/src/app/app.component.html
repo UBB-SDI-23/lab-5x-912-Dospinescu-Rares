@@ -1,8 +1,20 @@
-<ul>
-  <li><a routerLink="" class="text">Home</a></li>
-  <li><a routerLink="movies" class="text">Movies</a></li>
-  <li><a routerLink="movies/rating" class="text">Movies By Rating</a></li>
-  <li><a routerLink="reviews" class="text">Reviews</a></li>
-</ul>
+<div>
+<header class="bg-gray-900 py-4">
+    <div class="container mx-auto flex justify-between items-center text-white font-bold text-xl">
+        <ul class="flex pl-4">
+            <li><a routerLink="" class="px-2 py-1 hover:bg-gray-700 rounded">Home</a></li>
+            <span class="border-l border-gray-500 h-6 my-1 mx-4"></span>
+            <li><a routerLink="movies/reviewless" class="px-2 py-1 hover:bg-gray-700 rounded">Reviewless Movies</a></li>
+            <li><a routerLink="movies" class="px-2 py-1 hover:bg-gray-700 rounded">Movies</a></li>
+            <li><a routerLink="reviews" class="px-2 py-1 hover:bg-gray-700 rounded">Reviews</a></li>
+            <li><a routerLink="actors" class="px-2 py-1 hover:bg-gray-700 rounded">Actors</a></li>
+            <li><a routerLink="boxOffice" class="px-2 py-1 hover:bg-gray-700 rounded">Box Office</a></li>
+            <li><a routerLink="moviesandactors" class="px-2 py-1 hover:bg-gray-700 rounded">Movies And Actors</a></li>
+            <span class="border-l border-gray-500 h-6 my-1 mx-4"></span>
+            <li><a routerLink="movies/rating" class="px-2 py-1 hover:bg-gray-700 rounded">Movies By Rating</a></li>
+            <li><a routerLink="actors/hours" class="px-2 py-1 hover:bg-gray-700 rounded">Actors By Hours Filmed</a></li>
+        </ul>
+    </div>
+</header>
 
 <router-outlet></router-outlet>

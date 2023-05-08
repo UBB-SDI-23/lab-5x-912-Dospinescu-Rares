@@ -1,0 +1,53 @@
+<ng-container *ngIf="moviesAndActors">
+    <div class="min-h-screen flex-col bg-gray-700 text-white">
+        <button (click)="goBack()" class="absolute text-white font-bold py-2 px-4 text-md rounded focus:outline-none focus:shadow-outline hover:bg-gray-900 mt-3 mx-2">Go Back</button>
+        <h2 class="text-center text-2xl font-bold py-4">Details for relation between movie "{{moviesAndActors.movie.title}}" and author "{{moviesAndActors.actor.first_name}} {{moviesAndActors.actor.last_name}}"</h2>
+        <div class="relative overflow-x-auto">
+            <table class="w-full text-sm text-left">
+                <thead class="text-xs text-center uppercase bg-gray-800">
+                    <tr>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Movie Title</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Actor Full Name</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Total Hours Filmed For This Movie</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Director Notes</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Total Positive Reviews Of The Movie</th>
+                    </tr> 
+                </thead>
+                <tbody class="text-center">
+                    <tr class="border-b dark:border-gray-700 bg-gray-800 dark:bg-gray-700">
+                        <td class="border-2 border-gray-900 px-4 py-2"><a (click)="goToMovieDetails(moviesAndActors.movie.id)">{{moviesAndActors.movie.title}}</a></td>
+                        <td class="border-2 border-gray-900 px-4 py-2"><a (click)="goToActorDetails(moviesAndActors.actor.id)">{{moviesAndActors.actor.first_name}} {{moviesAndActors.actor.last_name}}</a></td>
+                        <td class="border-2 border-gray-900 px-4 py-2">{{moviesAndActors.total_hours_filmed | number: '1.0-0': 'en-US' }}</td>
+                        <td class="border-2 border-gray-900 px-4 py-2">{{moviesAndActors.director_notes}}</td>
+                        <td class="border-2 border-gray-900 px-4 py-2">{{moviesAndActors.positive_reviews}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="container mx-auto max-w-md">
+            <form (submit)="updateMoviesAndActors()" class="flex justify-center flex-col mt-4">
+                <div class="mb-4">
+                    <label for="total_hours_filmed" class="font-bold mb-2">Total Hours Filmed For This Movie: </label>
+                    <input id="total_hours_filmed" name="total_hours_filmed" [(ngModel)]="total_hours_filmed" type="string" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="mb-4">
+                    <label for="director_notes" class="font-bold mb-2">Director Notes: </label>
+                    <textarea id="director_notes" name="director_notes" [(ngModel)]="director_notes" type="text" rows="4" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+                </div>
+                <div class="flex flex-col justify-center items-center">
+                    <button type="submit" class="bg-white hover:bg-blue-200 text-gray-800 font-bold py-2 px-4 rounded mb-4 focus:outline-none focus:shadow-outline">Update Relation</button>
+                </div>
+            </form>
+            <div class="flex justify-center">
+                <button (click)="askForConfirmation()" class="bg-red-500 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Delete Relation</button>
+            </div>
+        </div>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="!moviesAndActors">
+    <div class="bg-gray-700 text-white min-h-screen flex-col">
+        <h2 class="text-center text-2xl font-bold py-4">The relation does not exist!</h2>
+    </div>
+</ng-container>

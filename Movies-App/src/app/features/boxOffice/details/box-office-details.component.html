@@ -1,0 +1,66 @@
+<ng-container *ngIf="boxOffice">
+    <div class="min-h-screen flex-col bg-gray-700 text-white">
+        <button (click)="goBack()" class="absolute text-white font-bold py-2 px-4 text-md rounded focus:outline-none focus:shadow-outline hover:bg-gray-900 mt-3 mx-2">Go Back</button>
+        <h2 class="text-center text-2xl font-bold py-4">Details for box office with distributor "{{boxOffice.distributor}}"</h2>
+        <div class="relative overflow-x-auto">
+            <table class="w-full text-sm text-left">
+                <thead class="text-xs text-center uppercase bg-gray-800">
+                    <tr>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Budget (In Millions)</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Lifetime Gross (In Millions)</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Distributor</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Movie Referenced</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Description</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Highest Score Of The Movie</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    <tr class="border-b dark:border-gray-700 bg-gray-800 dark:bg-gray-700">
+                        <td class="border-2 border-gray-900 px-4 py-2">{{boxOffice.budget_in_millions | number: '1.0-0': 'en-US' }}</td>
+                        <td class="border-2 border-gray-900 px-4 py-2">{{boxOffice.lifetime_gross_in_millions | number: '1.0-0': 'en-US' }}</td>
+                        <td class="border-2 border-gray-900 px-4 py-2">{{boxOffice.distributor}}</td>
+                        <td class="border-2 border-gray-900 px-4 py-2"><a (click)="goToMovieDetails(boxOffice.movie_referenced.id)">{{boxOffice.movie_referenced.title}}</a></td>
+                        <td class="border-2 border-gray-900 px-4 py-2">{{boxOffice.description}}</td>
+                        <td class="border-2 border-gray-900 px-4 py-2">{{boxOffice.highest_score}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="container mx-auto max-w-md">
+            <form (submit)="updateBoxOffice()" class="flex justify-center flex-col mt-4">
+                <h2 class="text-center text-2xl font-bold mb-6">You can edit the box office underneath!</h2>
+                <div class="flex flex-col">
+                    <div class="mb-4">
+                        <label for="budget_in_millions" class="font-bold mb-2">Budget (In Millions): </label>
+                        <input id="budget_in_millions" name="budget_in_millions" [(ngModel)]="budget_in_millions" type="string" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                    <div class="mb-4">
+                        <label for="lifetime_gross_in_millions" class="font-bold mb-2">Lifetime Gross (In Millions): </label>
+                        <input id="lifetime_gross_in_millions" name="lifetime_gross_in_millions" [(ngModel)]="lifetime_gross_in_millions" type="string" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                    <div class="mb-4">
+                        <label for="distributor" class="font-bold mb-2">Distributor: </label>
+                        <input id="distributor" name="distributor" [(ngModel)]="distributor" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                    <div class="mb-4">
+                        <label for="description" class="font-bold mb-2">Description: </label>
+                        <textarea id="description" name="description" [(ngModel)]="description" type="text" rows="4" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+                    </div>
+                    <div class="flex flex-col justify-center items-center">
+                        <button type="submit" class="bg-white hover:bg-blue-200 text-gray-800 font-bold py-2 px-4 rounded mb-4 focus:outline-none focus:shadow-outline">Update Box Office</button>
+                    </div>
+                </div>
+            </form>
+            <div class="flex justify-center">
+                <button (click)="askForConfirmation()" class="bg-red-500 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Delete Box Office</button>
+            </div>
+        </div>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="!boxOffice">
+    <div class="bg-gray-700 text-white min-h-screen flex-col">
+        <h2 class="text-center text-2xl font-bold py-4">Box Office does not exist!</h2>
+    </div>
+</ng-container>

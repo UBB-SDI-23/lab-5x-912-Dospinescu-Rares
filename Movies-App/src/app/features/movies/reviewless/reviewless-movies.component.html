@@ -1,0 +1,65 @@
+<div class="bg-gray-700 text-white min-h-screen flex-col">
+    <h2 class="text-center text-2xl font-bold py-4">You are currently browsing movies with no reviews!</h2>
+    <div class="text-center flex justify-center font-bold rounded focus:outline-none focus:shadow-outline mb-4">
+        <button (click)="goToAddMoviePage()" class="py-2 px-4 text-md hover:bg-gray-900 rounded">Add Movie</button>
+        <button (click)="sortMovies()" class="py-2 px-4 text-md hover:bg-gray-900 rounded">Sort by Title</button>
+    </div>
+     
+    <div *ngIf="status === 'success'">
+        <div class="flex justify-center">
+            <p class="py-2 px-2 font-bold text-md">Switch to page: </p>
+            <div *ngFor="let item of pageArray; let i = index">
+                <button *ngIf="item !== '...' && item !== currentPage + 1" (click)="switchPage(item)" class="py-2 px-4 text-md hover:bg-gray-900 rounded">{{item}}</button>
+                <p *ngIf="item !== '...' && item === currentPage + 1" class="py-2 px-4 font-bold text-md">{{item}}</p>
+                <p *ngIf="item === '...'" class="py-2 px-4 text-md">{{item}}</p>
+            </div>
+            <p class="py-2 px-2 font-bold text-md">({{resultTotal | number: '1.0-0': 'en-US' }} results)</p>
+        </div>
+
+        <div class="relative overflow-x-auto">
+            <table class="w-full text-sm text-left text-white">
+                <thead class="text-xs text-white text-center uppercase bg-gray-800">
+                    <tr>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Id</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Title</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Release Date</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Duration in Minutes</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Description</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">PG Rating</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Operations</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    <tr *ngFor="let movie of movies; let i = index" 
+                    [ngClass]="{'bg-gray-700 hover:bg-gray-500': i % 2 === 0, 'bg-gray-800 hover:bg-gray-600': i % 2 !== 0}">
+                        <td class="border-2 border-gray-900 px-4 py-2"><a (click)="goToMovieDetails(movie.id)">{{i+1}}</a></td>
+                        <td class="border-2 border-gray-900 px-4 py-2"><a (click)="goToMovieDetails(movie.id)">{{movie.title}}</a></td>
+                        <td class="border-2 border-gray-900 px-4 py-2">{{movie.release_date}}</td>
+                        <td class="border-2 border-gray-900 px-4 py-2">{{movie.duration_in_minutes}}</td>
+                        <td class="border-2 border-gray-900 px-4 py-2">{{movie.description}}</td>
+                        <td class="border-2 border-gray-900 px-4 py-2">{{movie.pgRating}}</td>
+                        <td class="border-2 border-gray-900 px-4 py-2">
+                            <div class="container mx-auto flex justify-center items-center space-x-2">
+                                <a (click)="goToMovieDetails(movie.id)"><img src="/assets/img/Details.png" alt="editButton" class="w-6 h-6"></a>
+                                <a (click)="askForConfirmation(i, movie.id)"><img src="/assets/img/Delete.png" alt="deleteButton" class="w-6 h-6"></a>
+                            </div>                          
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="flex justify-center">
+            <p class="py-2 px-2 font-bold text-md">Switch to page: </p>
+            <div *ngFor="let item of pageArray; let i = index">
+                <button *ngIf="item !== '...' && item !== currentPage + 1" (click)="switchPage(item)" class="py-2 px-4 text-md hover:bg-gray-900 rounded">{{item}}</button>
+                <p *ngIf="item !== '...' && item === currentPage + 1" class="py-2 px-4 font-bold text-md">{{item}}</p>
+                <p *ngIf="item === '...'" class="py-2 px-4 text-md">{{item}}</p>
+            </div>
+            <p class="py-2 px-2 font-bold text-md">({{resultTotal | number: '1.0-0': 'en-US' }} results)</p>
+        </div>
+    </div>
+    <div *ngIf="status === 'fail'" class="flex justify-center items-center text-2xl font-bold text-red-500">
+        There was an error while trying to fetch the movies!
+    </div>
+</div>

@@ -1,0 +1,35 @@
+<body class="bg-gray-700 text-white h-screen">
+    <button (click)="goBack()" class="absolute text-white font-bold py-2 px-4 text-md rounded focus:outline-none focus:shadow-outline hover:bg-gray-900 mt-3 mx-2">Go Back</button>
+    <div class="flex flex-wrap items-center justify-center">
+        <div class="container mx-auto max-w-md">
+            <form (submit)="addActor()" class="flex justify-center flex-col mt-4">
+                <h2 class="text-center text-2xl font-bold mb-6">Fill in the fields in order to add an actor!</h2>
+                <div class="flex flex-col">
+                    <div class="mb-4">
+                        <label for="first_name" class="font-bold mb-2">First Name: </label>
+                        <input id="first_name" name="first_name" [(ngModel)]="first_name" type="string" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                    <div class="mb-4">
+                        <label for="last_name" class="font-bold mb-2">Last Name: </label>
+                        <input id="last_name" name="last_name" [(ngModel)]="last_name" type="string" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                    <div class="mb-4">
+                        <label for="description" class="font-bold mb-2">Description: </label>
+                        <textarea id="description" name="description" [(ngModel)]="description" type="text" rows="4" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label for="day_of_birth" class="font-bold mb-2">Date of Birth: </label>
+                        <input id="day_of_birth" name="day_of_birth" [(ngModel)]="day_of_birth" type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                    <div class="mb-4">
+                        <label for="place_of_birth" class="font-bold mb-2">Place of Birth: </label>
+                        <input id="place_of_birth" name="place_of_birth" [(ngModel)]="place_of_birth" type="string" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                    <div class="flex justify-center">
+                        <button type="submit" class="bg-white text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Add Actor</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>

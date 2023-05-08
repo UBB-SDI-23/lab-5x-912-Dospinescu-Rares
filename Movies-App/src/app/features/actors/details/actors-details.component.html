@@ -1,0 +1,71 @@
+<ng-container *ngIf="actor"> 
+    <div class="min-h-screen flex-col bg-gray-700 text-white">
+        <button (click)="goBack()" class="absolute text-white font-bold py-2 px-4 text-md rounded focus:outline-none focus:shadow-outline hover:bg-gray-900 mt-3 mx-2">Go Back</button>
+        <h2 class="text-center text-2xl font-bold py-4">Details for actor with name "{{actor.first_name}} {{actor.last_name}}"</h2>
+        <div class="relative overflow-x-auto">
+            <table class="w-full text-sm text-left">
+                <thead class="text-xs text-center uppercase bg-gray-800">
+                    <tr>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">First Name</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Last Name</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Description</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Day of Birth</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Place of Birth</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Total Hours Filmed</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    <tr class="border-b dark:border-gray-700 bg-gray-800 dark:bg-gray-700">
+                        <td class="border-2 border-gray-900 px-4 py-2">{{actor.first_name}}</td>
+                        <td class="border-2 border-gray-900 px-4 py-2">{{actor.last_name}}</td>
+                        <td class="border-2 border-gray-900 px-4 py-2">{{actor.description}}</td>
+                        <td class="border-2 border-gray-900 px-4 py-2">{{actor.day_of_birth}}</td>
+                        <td class="border-2 border-gray-900 px-4 py-2">{{actor.place_of_birth}}</td>
+                        <td class="border-2 border-gray-900 px-4 py-2">{{actor.total_hours_filmed !== actor.total_hours_filmed ? 0 : actor.total_hours_filmed | number: '1.0-0': 'en-US'}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="container mx-auto max-w-md">
+            <form (submit)="updateActor()" class="flex justify-center flex-col">
+                <h2 class="text-2xl mb-4 mt-4 self-center">You can edit the actor underneath!</h2>
+                <div class="flex flex-col">
+                    <div class="mb-4">
+                        <label for="first_name" class="text-white font-bold mb-2">First Name: </label>
+                        <input id="first_name" name="first_name" [(ngModel)]="first_name" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                    <div class="mb-4">
+                        <label for="last_name" class="text-white font-bold mb-2">Last Name: </label>
+                        <input id="last_name" name="last_name" [(ngModel)]="last_name" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                    <div class="mb-4">
+                        <label for="description" class="text-white font-bold mb-2">Description: </label>
+                        <textarea id="description" name="description" [(ngModel)]="description" type="text" rows="4" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label for="day_of_birth" class="text-white font-bold mb-2">Day of birth: </label>
+                        <input id="day_of_birth" name="day_of_birth" [(ngModel)]="day_of_birth" type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                    <div class="mb-4">
+                        <label for="place_of_birth" class="text-white font-bold mb-2">Place of Birth: </label>
+                        <input id="place_of_birth" name="pgRatiplace_of_birthng" [(ngModel)]="place_of_birth" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                    <div class="flex flex-col justify-center items-center">
+                        <button type="submit" class="bg-white hover:bg-blue-200 text-gray-800 font-bold py-2 px-4 rounded mb-4 focus:outline-none focus:shadow-outline">Update Actor</button>
+                    </div>
+                </div>    
+            </form>
+            <div class="flex justify-center">
+                <button (click)="askForConfirmation(actor.id)" class="bg-red-500 hover:bg-red-900 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Delete Actor</button>
+            </div>
+        </div>
+    </div>
+</ng-container>
+
+
+<ng-container *ngIf="!actor">
+    <div class="bg-gray-700 text-white min-h-screen flex-col">
+        <h2 class="text-center text-2xl font-bold py-4">Actor with ID {{actorId}} does not exist!</h2>
+    </div>
+</ng-container>

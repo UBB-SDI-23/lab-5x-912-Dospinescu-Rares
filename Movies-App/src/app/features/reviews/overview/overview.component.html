@@ -1,0 +1,70 @@
+<div class="bg-gray-700 text-white min-h-screen flex-col">
+    <h2 class="text-center text-2xl font-bold py-4">You are currently browsing reviews!</h2>
+    <div class="text-center flex justify-center font-bold rounded focus:outline-none focus:shadow-outline mb-4">
+        <button (click)="goToAddReviewPage()" class="py-2 px-4 text-md hover:bg-gray-900 rounded">Add Review</button>
+    </div>
+     
+    <div *ngIf="status === 'success'">
+        <div class="flex justify-center">
+            <p class="py-2 px-2 font-bold text-md">Switch to page: </p>
+            <div *ngFor="let item of pageArray; let i = index">
+                <button *ngIf="item !== '...' && item !== currentPage + 1" (click)="switchPage(item)" class="py-2 px-4 text-md hover:bg-gray-900 rounded">{{item}}</button>
+                <p *ngIf="item !== '...' && item === currentPage + 1" class="py-2 px-4 font-bold text-md">{{item}}</p>
+                <p *ngIf="item === '...'" class="py-2 px-4 text-md">{{item}}</p>
+            </div>
+            <p class="py-2 px-2 font-bold text-md">({{resultTotal | number: '1.0-0': 'en-US' }} results)</p>
+        </div> 
+  
+        <div class="relative overflow-x-auto">
+            <table class="w-full text-sm text-left text-white">
+                <thead class="text-xs text-white text-center uppercase bg-gray-800">
+                    <tr>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Index</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Author</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Date Added</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Description</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Movie Reviewed</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Review Type</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Score</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Total Reviews Of The Movie</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Operations</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    <tr *ngFor="let review of reviews; let i = index" 
+                    [ngClass]="{'bg-gray-700 hover:bg-gray-500': i % 2 === 0, 'bg-gray-800 hover:bg-gray-600': i % 2 !== 0}">
+                        <td class="border-2 border-gray-900 px-4 py-2"><a (click)="goToReviewDetails(review.id)">{{i+1}}</a></td>
+                        <td class="border-2 border-gray-900 px-4 py-2"><a (click)="goToReviewDetails(review.id)">{{review.author}}</a></td>
+                        <td class="border-2 border-gray-900 px-4 py-2">{{review.date_added}}</td>
+                        <td class="border-2 border-gray-900 px-4 py-2">{{review.description}}</td>
+                        <td class="border-2 border-gray-900 px-4 py-2"><a (click)="goToMovieDetails(review.movie_reviewed.id)">{{review.movie_reviewed.title}}</a></td>
+                        <td class="border-2 border-gray-900 px-4 py-2">
+                            <span *ngIf="review.recommended === 'Y'" class="text-green-500">Positive Review</span>
+                            <span *ngIf="review.recommended === 'N'" class="text-red-500">Negative Review</span></td>
+                        <td class="border-2 border-gray-900 px-4 py-2">{{review.score}}</td>
+                        <td class="border-2 border-gray-900 px-4 py-2">{{review.total_reviews}}</td>
+                        <td class="border-2 border-gray-900 px-4 py-2">
+                            <div class="container mx-auto flex justify-center items-center space-x-2">
+                                <a (click)="goToReviewDetails(review.id)"><img src="/assets/img/Details.png" alt="editButton" class="w-6 h-6"></a>
+                                <a (click)="askForConfirmation(i, review.id)"><img src="/assets/img/Delete.png" alt="deleteButton" class="w-6 h-6"></a>
+                            </div>                          
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+ 
+        <div class="flex justify-center">
+            <p class="py-2 px-2 font-bold text-md">Switch to page: </p>
+            <div *ngFor="let item of pageArray; let i = index">
+                <button *ngIf="item !== '...' && item !== currentPage + 1" (click)="switchPage(item)" class="py-2 px-4 text-md hover:bg-gray-900 rounded">{{item}}</button>
+                <p *ngIf="item !== '...' && item === currentPage + 1" class="py-2 px-4 font-bold text-md">{{item}}</p>
+                <p *ngIf="item === '...'" class="py-2 px-4 text-md">{{item}}</p>
+            </div>
+            <p class="py-2 px-2 font-bold text-md">({{resultTotal | number: '1.0-0': 'en-US' }} results)</p>
+        </div>
+    </div>
+    <div *ngIf="status === 'fail'" class="flex justify-center items-center text-2xl font-bold text-red-500">
+        There was an error while trying to fetch the reviews!
+    </div>
+</div>
