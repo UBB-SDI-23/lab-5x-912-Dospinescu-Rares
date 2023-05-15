@@ -6,6 +6,7 @@
             <table class="w-full text-sm text-left">
                 <thead class="text-xs text-center uppercase bg-gray-800">
                     <tr>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Added By</th>
                         <th scope="col" class="border-2 border-gray-900 px-4 py-2">Movie Title</th>
                         <th scope="col" class="border-2 border-gray-900 px-4 py-2">Actor Full Name</th>
                         <th scope="col" class="border-2 border-gray-900 px-4 py-2">Total Hours Filmed For This Movie</th>
@@ -15,8 +16,9 @@
                 </thead>
                 <tbody class="text-center">
                     <tr class="border-b dark:border-gray-700 bg-gray-800 dark:bg-gray-700">
-                        <td class="border-2 border-gray-900 px-4 py-2"><a (click)="goToMovieDetails(moviesAndActors.movie.id)">{{moviesAndActors.movie.title}}</a></td>
-                        <td class="border-2 border-gray-900 px-4 py-2"><a (click)="goToActorDetails(moviesAndActors.actor.id)">{{moviesAndActors.actor.first_name}} {{moviesAndActors.actor.last_name}}</a></td>
+                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToUserDetails(moviesAndActors.user.id)">{{moviesAndActors.user.username}}</a></td>
+                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToMovieDetails(moviesAndActors.movie.id)">{{moviesAndActors.movie.title}}</a></td>
+                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToActorDetails(moviesAndActors.actor.id)">{{moviesAndActors.actor.first_name}} {{moviesAndActors.actor.last_name}}</a></td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{moviesAndActors.total_hours_filmed | number: '1.0-0': 'en-US' }}</td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{moviesAndActors.director_notes}}</td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{moviesAndActors.positive_reviews}}</td>
@@ -25,7 +27,9 @@
             </table>
         </div>
 
-        <div class="container mx-auto max-w-md">
+        <h2 [hidden]="(isLoggedIn() | async) === true"  class="text-center text-2xl font-bold py-4 text-red-500">You need to be logged in to be able to edit a relation!</h2>
+        <h2 [hidden]="(hasPermission(moviesAndActors) | async) === true || (isLoggedIn() | async) === false" class="text-center text-2xl font-bold py-4 text-red-500">You cannot edit someone else's relation as a regular user!</h2>
+        <div [hidden]="(hasPermission(moviesAndActors) | async) === false" class="container mx-auto max-w-md">
             <form (submit)="updateMoviesAndActors()" class="flex justify-center flex-col mt-4">
                 <div class="mb-4">
                     <label for="total_hours_filmed" class="font-bold mb-2">Total Hours Filmed For This Movie: </label>

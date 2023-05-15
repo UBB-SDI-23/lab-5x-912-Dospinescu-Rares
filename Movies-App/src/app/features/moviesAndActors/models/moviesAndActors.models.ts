@@ -1,8 +1,10 @@
 import { ActorWithHours } from "../../actors/models/actors.models";
 import { MovieWithRating } from "../../movies/models/movie.models";
+import { User } from "../../users/models/user.models";
 
 export interface MoviesAndActors {
     "id": string,
+    "user": User;
     "movie": string,
     "actor": string,
     "total_hours_filmed": string,
@@ -11,6 +13,7 @@ export interface MoviesAndActors {
 
 export interface MoviesAndActorsWithPositive {
     "id": string,
+    "user": User;
     "movie": MovieWithRating,
     "actor": ActorWithHours,
     "total_hours_filmed": string,

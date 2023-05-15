@@ -6,6 +6,7 @@
             <table class="w-full text-sm text-left">
                 <thead class="text-xs text-center uppercase bg-gray-800">
                     <tr>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Added By</th>
                         <th scope="col" class="border-2 border-gray-900 px-4 py-2">First Name</th>
                         <th scope="col" class="border-2 border-gray-900 px-4 py-2">Last Name</th>
                         <th scope="col" class="border-2 border-gray-900 px-4 py-2">Description</th>
@@ -16,6 +17,7 @@
                 </thead>
                 <tbody class="text-center">
                     <tr class="border-b dark:border-gray-700 bg-gray-800 dark:bg-gray-700">
+                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToUserDetails(actor.user.id)">{{actor.user.username}}</a></td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{actor.first_name}}</td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{actor.last_name}}</td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{actor.description}}</td>
@@ -27,7 +29,9 @@
             </table>
         </div>
 
-        <div class="container mx-auto max-w-md">
+        <h2 [hidden]="(isLoggedIn() | async) === true"  class="text-center text-2xl font-bold py-4 text-red-500">You need to be logged in to be able to edit an actor!</h2>
+        <h2 [hidden]="(hasPermission(actor) | async) === true || (isLoggedIn() | async) === false" class="text-center text-2xl font-bold py-4 text-red-500">You cannot edit someone else's actor as a regular user!</h2>
+        <div [hidden]="(hasPermission(actor) | async) === false" class="container mx-auto max-w-md">
             <form (submit)="updateActor()" class="flex justify-center flex-col">
                 <h2 class="text-2xl mb-4 mt-4 self-center">You can edit the actor underneath!</h2>
                 <div class="flex flex-col">

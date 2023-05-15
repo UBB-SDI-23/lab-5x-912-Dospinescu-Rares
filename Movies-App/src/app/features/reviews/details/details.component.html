@@ -6,6 +6,7 @@
             <table class="w-full text-sm text-left">
                 <thead class="text-xs text-center uppercase bg-gray-800">
                     <tr>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Added By</th>
                         <th scope="col" class="border-2 border-gray-900 px-4 py-2">Author</th>
                         <th scope="col" class="border-2 border-gray-900 px-4 py-2">Date Added</th>
                         <th scope="col" class="border-2 border-gray-900 px-4 py-2">Description</th>
@@ -13,14 +14,15 @@
                         <th scope="col" class="border-2 border-gray-900 px-4 py-2">Review Type</th>
                         <th scope="col" class="border-2 border-gray-900 px-4 py-2">Score</th>
                         <th scope="col" class="border-2 border-gray-900 px-4 py-2">Total reviews of the movie</th>
-                    </tr> 
+                    </tr>
                 </thead>
                 <tbody class="text-center">
                     <tr class="border-b dark:border-gray-700 bg-gray-800 dark:bg-gray-700">
+                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToUserDetails(review.user.id)">{{review.user.username}}</a></td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{review.author}}</td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{review.date_added}}</td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{review.description}}</td>
-                        <td class="border-2 border-gray-900 px-4 py-2"><a (click)="goToMovieDetails(review.movie_reviewed.id)">{{review.movie_reviewed.title}}</a></td>
+                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToMovieDetails(review.movie_reviewed.id)">{{review.movie_reviewed.title}}</a></td>
                         <td class="border-2 border-gray-900 px-4 py-2">
                             <span *ngIf="review.recommended === 'Y'" class="text-green-500">Positive Review</span>
                             <span *ngIf="review.recommended === 'N'" class="text-red-500">Negative Review</span></td>
@@ -31,7 +33,9 @@
             </table>
         </div>
 
-        <div class="container mx-auto max-w-md">
+        <h2 [hidden]="(isLoggedIn() | async) === true"  class="text-center text-2xl font-bold py-4 text-red-500">You need to be logged in to be able to edit a review!</h2>
+        <h2 [hidden]="(hasPermission(review) | async) === true || (isLoggedIn() | async) === false" class="text-center text-2xl font-bold py-4 text-red-500">You cannot edit someone else's review as a regular user!</h2>
+        <div [hidden]="(hasPermission(review) | async) === false" class="container mx-auto max-w-md">
             <form (submit)="updateReview()" class="flex justify-center flex-col mt-4">
                 <h2 class="text-center text-2xl font-bold mb-6">You can edit the review underneath!</h2>
                 <div class="flex flex-col">

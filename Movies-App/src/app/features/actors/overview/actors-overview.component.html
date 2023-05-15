@@ -1,16 +1,19 @@
 <div class="bg-gray-700 text-white min-h-screen flex-col">
+    <button [hidden]="(getRole() | async) !== 'admin' || checkboxItems.length === 0" (click)="bulkDelete()" class="absolute right-0 text-red-400 font-bold py-2 px-4 text-md rounded focus:outline-none focus:shadow-outline hover:bg-gray-900 mt-3 mx-2">Bulk Delete</button>
     <h2 class="text-center text-2xl font-bold py-4">You are currently browsing actors!</h2>
     <div class="text-center flex justify-center font-bold rounded focus:outline-none focus:shadow-outline mb-4">
-        <button (click)="goToAddActorPage()" class="py-2 px-4 text-md hover:bg-gray-900 rounded">Add Actor</button>
+        <button [hidden]="(isLoggedIn() | async) === false" (click)="goToAddActorPage()" class="py-2 px-4 text-md hover:bg-gray-900 rounded">Add Actor</button>
     </div>
 
-
+    <div *ngIf="status === 'processing'" class="flex justify-center items-center text-2xl font-bold text-green-500">
+        The actors are being fetched!
+    </div>
     <div *ngIf="status === 'success'">
         <div class="flex justify-center">
             <p class="py-2 px-2 font-bold text-md">Switch to page: </p>
             <div *ngFor="let item of pageArray; let i = index">
                 <button *ngIf="item !== '...' && item !== currentPage + 1" (click)="switchPage(item)" class="py-2 px-4 text-md hover:bg-gray-900 rounded">{{item}}</button>
-                <p *ngIf="item !== '...' && item === currentPage + 1" class="py-2 px-4 font-bold text-md">{{item}}</p>
+                <p *ngIf="item !== '...' && item === currentPage + 1" class="py-2 px-4 font-bold text-black text-md">{{item}}</p>
                 <p *ngIf="item === '...'" class="py-2 px-4 text-md">{{item}}</p>
             </div>
             <p class="py-2 px-2 font-bold text-md">({{resultTotal | number: '1.0-0': 'en-US' }} results)</p>
@@ -21,6 +24,7 @@
                 <thead class="text-xs text-white text-center uppercase bg-gray-800">
                     <tr>
                         <th scope="col" class="border-2 border-gray-900 px-4 py-2">Index</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Added By</th>
                         <th scope="col" class="border-2 border-gray-900 px-4 py-2">First Name</th>
                         <th scope="col" class="border-2 border-gray-900 px-4 py-2">Last Name</th>
                         <th scope="col" class="border-2 border-gray-900 px-4 py-2">Description</th>
@@ -33,17 +37,19 @@
                 <tbody class="text-center">
                     <tr *ngFor="let actor of actors; let i = index"
                     [ngClass]="{'bg-gray-700 hover:bg-gray-500': i % 2 === 0, 'bg-gray-800 hover:bg-gray-600': i % 2 !== 0}">
-                        <td class="border-2 border-gray-900 px-4 py-2"><a (click)="goToActorDetails(actor.id)">{{i+1}}</a></td>
-                        <td class="border-2 border-gray-900 px-4 py-2"><a (click)="goToActorDetails(actor.id)">{{actor.first_name}}</a></td>
-                        <td class="border-2 border-gray-900 px-4 py-2"><a (click)="goToActorDetails(actor.id)">{{actor.last_name}}</a></td>
+                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToActorDetails(actor.id)">{{i+1}}</a></td>
+                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToUserDetails(actor.user.id)">{{actor.user.username}}</a></td>
+                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToActorDetails(actor.id)">{{actor.first_name}}</a></td>
+                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToActorDetails(actor.id)">{{actor.last_name}}</a></td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{actor.description}}</td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{actor.day_of_birth}}</td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{actor.place_of_birth}}</td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{actor.total_hours_filmed | number: '1.0-0': 'en-US' }}</td>
                         <td class="border-2 border-gray-900 px-4 py-2">
                             <div class="container mx-auto flex justify-center items-center space-x-2">
+                                <input [hidden]="(getRole() | async) !== 'admin'" type="checkbox" (change)="checkboxChanged(actor.id)" class="h-6 w-6"/>
                                 <a (click)="goToActorDetails(actor.id)"><img src="/assets/img/Details.png" alt="editButton" class="w-6 h-6"></a>
-                                <a (click)="askForConfirmation(i, actor.id)"><img src="/assets/img/Delete.png" alt="deleteButton" class="w-6 h-6"></a>
+                                <a [hidden]="(hasPermission(actor) | async) === false" (click)="askForConfirmation(i, actor.id)"><img src="/assets/img/Delete.png" alt="deleteButton" class="w-6 h-6"></a>
                             </div> 
                         </td>
                     </tr>
@@ -55,7 +61,7 @@
             <p class="py-2 px-2 font-bold text-md">Switch to page: </p>
             <div *ngFor="let item of pageArray; let i = index">
                 <button *ngIf="item !== '...' && item !== currentPage + 1" (click)="switchPage(item)" class="py-2 px-4 text-md hover:bg-gray-900 rounded">{{item}}</button>
-                <p *ngIf="item !== '...' && item === currentPage + 1" class="py-2 px-4 font-bold text-md">{{item}}</p>
+                <p *ngIf="item !== '...' && item === currentPage + 1" class="py-2 px-4 font-bold text-black text-md">{{item}}</p>
                 <p *ngIf="item === '...'" class="py-2 px-4 text-md">{{item}}</p>
             </div>
             <p class="py-2 px-2 font-bold text-md">({{resultTotal | number: '1.0-0': 'en-US' }} results)</p>
@@ -65,3 +71,4 @@
         There was an error while trying to fetch the actors!
     </div>
 </div>
+

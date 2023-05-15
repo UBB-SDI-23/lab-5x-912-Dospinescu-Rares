@@ -6,7 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { HttpResponse } from '@angular/common/http';
 import { PaginationService } from 'src/app/common/services/pagination.service.service';
 import { SharedDataService } from 'src/app/common/services/shared-data.service.service';
-import { combineLatest } from 'rxjs';
+import { Observable, combineLatest } from 'rxjs';
  
 @Component({
   selector: 'app-overview',
@@ -15,12 +15,14 @@ import { combineLatest } from 'rxjs';
 })
 export class MovieOverviewComponent implements OnInit {
   movies: MovieWithRating[] = [];
-  status = "success";
+  status = "processing";
   currentPage = 0;
   pageTotal = 0;
-  pageSize = 200;
+  pageSize = 20;
   pageArray: (number | string)[] = [];
   resultTotal: number = 0;
+
+  checkboxItems: number[] = [];
 
   constructor(private apiSvc: ApiService, private pageSvc: PaginationService, private router: Router, private toastr: ToastrService, private sharedData: SharedDataService) {}
 
@@ -38,7 +40,8 @@ export class MovieOverviewComponent implements OnInit {
   }
 
   loadMovies(): void {
-    this.status = "";
+    this.checkboxItems = [];
+    this.status = "processing";
     this.apiSvc.getMovies(this.currentPage, this.pageSize).subscribe(
       (response: HttpResponse<MovieWithRating[]>) => {
         this.movies = response.body!;
@@ -57,6 +60,11 @@ export class MovieOverviewComponent implements OnInit {
     this.sharedData.prepareToNavigate("/movies", this.currentPage, this.pageSize)
     this.router.navigateByUrl(`/movies/${movieId}`);
   }
+
+  goToUserDetails(userId: string) {
+    this.sharedData.prepareToNavigate("/movies", this.currentPage, this.pageSize)
+    this.router.navigateByUrl(`/user/profile/${userId}`);
+  }
  
   goToAddMoviePage() {
     this.sharedData.prepareToNavigate("/movies", this.currentPage, this.pageSize)
@@ -65,6 +73,35 @@ export class MovieOverviewComponent implements OnInit {
 
   sortMovies() {
     this.movies.sort((a, b) => (a.title < b.title ? -1 : 1));
+  }
+
+  hasPermission(movie: MovieWithRating): Observable<boolean> {
+    return this.apiSvc.hasPermission(movie.user);
+  }
+
+  isLoggedIn(): Observable<boolean> {
+    return this.apiSvc.isLoggedIn();
+  }
+
+  getRole(): Observable<string> {
+    return this.apiSvc.getRole();
+  }
+
+  bulkDelete() {
+    this.apiSvc.bulkDelete("movie", this.checkboxItems).subscribe((result: any) => {
+      this.toastr.success(result, '', {timeOut: 3000});
+      this.loadMovies();
+    })
+  }
+
+  checkboxChanged(item: string) {
+    var itemNumber = parseInt(item, 10);
+    const index = this.checkboxItems.findIndex(i => i === itemNumber);
+    if (index > -1) {
+      this.checkboxItems.splice(index, 1);
+    } else {
+      this.checkboxItems.push(itemNumber);
+    }
   }
 
   deleteMovie(movieId: string) {

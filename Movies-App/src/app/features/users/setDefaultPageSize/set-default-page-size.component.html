@@ -1,0 +1,24 @@
+<body [hidden]="(getRole() | async) === ''" class="bg-gray-700 text-white h-screen">
+    <button (click)="goBack()" class="absolute text-white font-bold py-2 px-4 text-md rounded focus:outline-none focus:shadow-outline hover:bg-gray-900 mt-3 mx-2">Go Back</button>
+    <div class="flex flex-wrap items-center justify-center">
+        <div class="container mx-auto max-w-md">
+            <form (submit)="setSize()" class="flex justify-center flex-col mt-4">
+                <h2 class="text-center text-2xl font-bold mb-6">Fill in the fields in order to change the default page size!</h2>
+                <div class="flex flex-col">
+                    <div class="mb-4">
+                        <label for="size" class="font-bold mb-2">New Page Size: </label>
+                        <input id="size" name="size" [(ngModel)]="size" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div> 
+                    <div class="flex justify-center">
+                        <button type="submit" class="bg-white text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+<body [hidden]="(getRole() | async) === 'admin'" class="bg-gray-700 text-white h-screen">
+    <button (click)="goBack()" class="absolute text-white font-bold py-2 px-4 text-md rounded focus:outline-none focus:shadow-outline hover:bg-gray-900 mt-3 mx-2">Go Back</button>
+    <h2 class="py-4 text-center text-2xl font-bold mb-6">You are not allowed to use this page!</h2>
+</body>

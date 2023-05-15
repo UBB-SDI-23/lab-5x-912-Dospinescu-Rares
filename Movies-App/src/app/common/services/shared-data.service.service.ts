@@ -8,7 +8,7 @@ import { BehaviorSubject } from 'rxjs';
 export class SharedDataService {
   private urls = new BehaviorSubject<string[]>([]);
   private currentPage = new BehaviorSubject<number>(0);
-  private pageSize = new BehaviorSubject<number>(200);
+  private pageSize = new BehaviorSubject<number>(0);
 
   currentPage$ = this.currentPage.asObservable();
   pageSize$ = this.pageSize.asObservable();
@@ -34,7 +34,7 @@ export class SharedDataService {
   clear() {
     this.urls.next([]);
     this.currentPage.next(0);
-    this.pageSize.next(200);
+    this.pageSize.next(0);
   }
 
   prepareToNavigate(origin: string, currentPage: number, pageSize: number) {

@@ -1,0 +1,37 @@
+<body [hidden]="(isLoggedIn() | async) === true || (getCode() | async) !== ''" class="bg-gray-700 text-white h-screen">
+    <button (click)="goBack()" class="absolute text-white font-bold py-2 px-4 text-md rounded focus:outline-none focus:shadow-outline hover:bg-gray-900 mt-3 mx-2">Go Back</button>
+    <div class="flex flex-wrap items-center justify-center">
+        <div class="container mx-auto max-w-md">
+            <form (submit)="register()" class="flex justify-center flex-col mt-4">
+                <h2 class="text-center text-2xl font-bold mb-6">Fill in the fields in order to register!</h2>
+                <div class="flex flex-col">
+                    <div class="mb-4">
+                        <label for="username" class="font-bold mb-2">Username: </label>
+                        <input id="username" name="username" [(ngModel)]="username" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div> 
+                    <div class="mb-4">
+                        <label for="email" class="font-bold mb-2">Email: </label>
+                        <input id="email" name="email" [(ngModel)]="email" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div> 
+                    <div class="mb-4">
+                        <label for="password" class="font-bold mb-2">Password: </label>
+                        <input id="password" name="password" [(ngModel)]="password" type="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div> 
+                    <div class="flex justify-center">
+                        <button type="submit" class="bg-white text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Register</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+<body [hidden]="(isLoggedIn() | async) === false || (getCode() | async) !== ''" class="bg-gray-700 text-white h-screen">
+    <button (click)="goBack()" class="absolute text-white font-bold py-2 px-4 text-md rounded focus:outline-none focus:shadow-outline hover:bg-gray-900 mt-3 mx-2">Go Back</button>
+    <h2 class="py-4 text-center text-2xl font-bold mb-6">You are already logged in!</h2>
+</body>
+
+<body [hidden]="(isLoggedIn() | async) === true || (getCode() | async) === ''" class="bg-gray-700 text-white h-screen">
+    <button (click)="goBack()" class="absolute text-white font-bold py-2 px-4 text-md rounded focus:outline-none focus:shadow-outline hover:bg-gray-900 mt-3 mx-2">Go Back</button>
+    <h2 class="py-4 text-center text-2xl font-bold mb-6">Your account has been successfully created! Use the confirmation code {{ (getCode() | async) }} in order to activate your account!</h2>
+</body>

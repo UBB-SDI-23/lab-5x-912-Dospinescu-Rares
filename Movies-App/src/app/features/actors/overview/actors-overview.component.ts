@@ -6,7 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { HttpResponse } from '@angular/common/http';
 import { PaginationService } from 'src/app/common/services/pagination.service.service';
 import { SharedDataService } from 'src/app/common/services/shared-data.service.service';
-import { combineLatest } from 'rxjs';
+import { Observable, combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-actors-overview',
@@ -15,12 +15,14 @@ import { combineLatest } from 'rxjs';
 })
 export class ActorsOverviewComponent implements OnInit{
   actors: ActorWithHours[] = [];
-  status = "success";
+  status = "processing";
   currentPage = 0;
   pageTotal = 0;
-  pageSize = 200;
+  pageSize = 20;
   pageArray: (number | string)[] = [];
   resultTotal: number = 0;
+
+  checkboxItems: number[] = [];
 
   constructor(private apiSvc: ApiService, private pageSvc: PaginationService, private router: Router, private toastr: ToastrService, private sharedData: SharedDataService) {}
 
@@ -38,7 +40,8 @@ export class ActorsOverviewComponent implements OnInit{
   }
  
   loadActors(): void {
-    this.status = "";
+    this.checkboxItems = [];
+    this.status = "processing";
     this.apiSvc.getActors(this.currentPage, this.pageSize).subscribe(
       (response: HttpResponse<ActorWithHours[]>) => {
         this.actors = response.body!;
@@ -58,6 +61,11 @@ export class ActorsOverviewComponent implements OnInit{
     this.router.navigateByUrl(`/actors/${actorId}`)
   }
 
+  goToUserDetails(userId: string) {
+    this.sharedData.prepareToNavigate("/actors", this.currentPage, this.pageSize)
+    this.router.navigateByUrl(`/user/profile/${userId}`);
+  }
+
   goToAddActorPage() {
     this.sharedData.prepareToNavigate("/actors", this.currentPage, this.pageSize)
     this.router.navigateByUrl(`/actors/add`);
@@ -68,6 +76,36 @@ export class ActorsOverviewComponent implements OnInit{
       this.toastr.success(`The actor was succesfully deleted!`, '', {timeOut: 3000});
       this.loadActors();
     })
+  }
+
+  hasPermission(actor: ActorWithHours): Observable<boolean> {
+    return this.apiSvc.hasPermission(actor.user);
+  }
+
+  isLoggedIn(): Observable<boolean> {
+    return this.apiSvc.isLoggedIn();
+  }
+
+  getRole(): Observable<string> {
+    return this.apiSvc.getRole();
+  }
+
+  bulkDelete() {
+    this.apiSvc.bulkDelete("actor", this.checkboxItems).subscribe((result: any) => {
+      this.toastr.success(result, '', {timeOut: 3000});
+      this.checkboxItems = [];
+      this.loadActors();
+    })
+  }
+
+  checkboxChanged(item: string) {
+    var itemNumber = parseInt(item, 10);
+    const index = this.checkboxItems.findIndex(i => i === itemNumber);
+    if (index > -1) {
+      this.checkboxItems.splice(index, 1);
+    } else {
+      this.checkboxItems.push(itemNumber);
+    }
   }
 
   askForConfirmation(i:number, actorId: string) {

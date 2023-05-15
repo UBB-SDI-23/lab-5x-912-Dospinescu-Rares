@@ -5,6 +5,7 @@ import { AddMovieDto, Movie, MovieWithRating, MovieWithReviews } from '../models
 import { ToastrService } from 'ngx-toastr';
 import { SharedDataService } from 'src/app/common/services/shared-data.service.service';
 import { ReviewsWithTotal } from '../../reviews/models/review.models';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-details',
@@ -16,7 +17,7 @@ export class MovieDetailsComponent implements OnInit{
   movie?: MovieWithReviews;
   reviews?: ReviewsWithTotal[] = [];
   PGRatings = ['G', 'PG', 'PG-13', 'R', 'NC-17'];
- 
+
   title?: string;
   release_date?: string;
   duration_in_minutes?: (number | string)
@@ -61,6 +62,11 @@ export class MovieDetailsComponent implements OnInit{
   goToReviewDetails(reviewId: string) {
     this.sharedData.addUrl(`/movies/${this.movieId}`);
     this.router.navigateByUrl(`/reviews/${reviewId}`);
+  }
+
+  goToUserDetails(userId: string) {
+    this.sharedData.addUrl(`/movies/${this.movieId}`);
+    this.router.navigateByUrl(`/user/profile/${userId}`);
   }
 
   updateMovie() {
@@ -113,6 +119,14 @@ export class MovieDetailsComponent implements OnInit{
     else {
       this.toastr.error('All fields must be filled!', '', {timeOut: 3000});
     }
+  }
+
+  hasPermission(movie: MovieWithRating): Observable<boolean> {
+    return this.apiSvc.hasPermission(movie.user);
+  }
+
+  isLoggedIn(): Observable<boolean> {
+    return this.apiSvc.isLoggedIn();
   }
 
   goBack() {

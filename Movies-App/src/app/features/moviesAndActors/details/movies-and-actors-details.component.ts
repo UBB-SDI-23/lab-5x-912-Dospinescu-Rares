@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { SharedDataService } from 'src/app/common/services/shared-data.service.service';
 import { MovieWithRating } from '../../movies/models/movie.models';
 import { ActorWithHours } from '../../actors/models/actors.models';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-movies-and-actors-details',
@@ -93,9 +94,22 @@ export class MoviesAndActorsDetailsComponent implements OnInit{
     this.router.navigateByUrl(`/movies/${movieId}`);
   }
 
+  goToUserDetails(userId: string) {
+    this.sharedData.addUrl(`/moviesandactors/${this.moviesAndActorsId}`);
+    this.router.navigateByUrl(`/user/profile/${userId}`);
+  }
+
   goToActorDetails(actorId: string) {
     this.sharedData.addUrl(`/moviesandactors/${this.moviesAndActorsId}`)
     this.router.navigateByUrl(`/actor/${actorId}`);
+  }
+
+  hasPermission(relation: MoviesAndActorsWithPositive): Observable<boolean> {
+    return this.apiSvc.hasPermission(relation.user);
+  }
+
+  isLoggedIn(): Observable<boolean> {
+    return this.apiSvc.isLoggedIn();
   }
 
   goBack() {

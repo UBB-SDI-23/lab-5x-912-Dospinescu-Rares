@@ -1,4 +1,5 @@
 import { ReviewsWithTotal } from "../../reviews/models/review.models";
+import { User } from "../../users/models/user.models";
 
 export interface Movie {
     "id": string;
@@ -11,6 +12,7 @@ export interface Movie {
 
 export interface MovieWithRating {
     "id": string;
+    "user": User;
     "title": string;
     "release_date": string;
     "duration_in_minutes": string;
@@ -21,6 +23,7 @@ export interface MovieWithRating {
 
 export interface MovieWithReviews {
     "id": string;
+    "user": User;
     "title": string;
     "release_date": string;
     "duration_in_minutes": string;

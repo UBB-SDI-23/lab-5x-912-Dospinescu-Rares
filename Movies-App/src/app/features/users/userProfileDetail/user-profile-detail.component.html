@@ -1,0 +1,110 @@
+<ng-container *ngIf="userProfile">
+    <div class="min-h-screen flex-col bg-gray-700 text-white">
+        <button (click)="goBack()" class="absolute text-white font-bold py-2 px-4 text-md rounded focus:outline-none focus:shadow-outline hover:bg-gray-900 mt-3 mx-2">Go Back</button>
+        <button (click)="goToUserDetails(userProfile.user.id)" class="absolute right-0 text-white font-bold py-2 px-4 text-md rounded focus:outline-none focus:shadow-outline hover:bg-gray-900 mt-3 mx-2">Go To Account</button>
+        <h2 class="text-center text-2xl font-bold py-4">Details for user profile belonging to "{{userProfile.user.username}}"</h2>
+        <div class="relative overflow-x-auto">
+            <table class="w-full text-sm text-left">
+                <thead class="text-xs text-center uppercase bg-gray-800">
+                    <tr>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Profile Belongs to</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Bio</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Location</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Birthday</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Gender</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Marital Status</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    <tr class="border-b dark:border-gray-700 bg-gray-800 dark:bg-gray-700">
+                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToUserDetails(userProfile.user.id)">{{userProfile.user.username}}</a></td>
+                        <td class="border-2 border-gray-900 px-4 py-2">{{userProfile.bio}}</td>
+                        <td class="border-2 border-gray-900 px-4 py-2">{{userProfile.location}}</td>
+                        <td class="border-2 border-gray-900 px-4 py-2">{{userProfile.birthday}}</td>
+                        <td class="border-2 border-gray-900 px-4 py-2">
+                            <span *ngIf="userProfile.gender === 'F'">Female</span>
+                            <span *ngIf="userProfile.gender === 'M'">Male</span>
+                            <span *ngIf="userProfile.gender === 'O'">Other</span>
+                        </td>
+                        <td class="border-2 border-gray-900 px-4 py-2">
+                            <span *ngIf="userProfile.marital_status === 'S'">Single</span>
+                            <span *ngIf="userProfile.marital_status === 'M'">Married</span>
+                            <span *ngIf="userProfile.marital_status === 'D'">Divorced</span>
+                            <span *ngIf="userProfile.marital_status === 'W'">Widowed</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2 class="text-center text-2xl font-bold py-4">Underneath you can see some statistics for this user!</h2>
+        <div class="relative overflow-x-auto">
+            <table class="w-full text-sm text-left text-white">
+                <thead class="text-xs text-white text-center uppercase bg-gray-800">
+                    <tr>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Movies Added</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Reviews Added</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Box Offices Added</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">actors Added</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Movie And Actor Relations Added</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                        <td class="border-2 border-gray-900 px-4 py-2">{{userProfile.movies_added}}</td>
+                        <td class="border-2 border-gray-900 px-4 py-2">{{userProfile.reviews_added}}</td>
+                        <td class="border-2 border-gray-900 px-4 py-2">{{userProfile.box_offices_added}}</td>
+                        <td class="border-2 border-gray-900 px-4 py-2">{{userProfile.actors_added}}</td>
+                        <td class="border-2 border-gray-900 px-4 py-2">{{userProfile.movies_and_actors_added}}</td>
+                </tbody>
+            </table>
+        </div>
+
+        <h2 [hidden]="(isLoggedIn() | async) === true"  class="text-center text-2xl font-bold py-4 text-red-500">You need to be logged in to be able to edit an user profile!</h2>
+        <h2 [hidden]="(hasPermission(userProfile.user) | async) === true || (isLoggedIn() | async) === false" class="text-center text-2xl font-bold py-4 text-red-500">You cannot edit someone else's user profile as a regular user!</h2>
+        <div [hidden]="(hasPermission(userProfile.user) | async) === false" class="container mx-auto max-w-md">
+            <form (submit)="updateUser()" class="flex justify-center flex-col mt-4">
+                <h2 class="text-center text-2xl font-bold mb-6">You can edit the details of the user profile underneath!</h2>
+                <div class="flex flex-col">
+                    <div class="mb-4">
+                        <label for="bio" class="text-white font-bold mb-2">Bio: </label>
+                        <textarea id="bio" name="bio" [(ngModel)]="bio" type="text" rows="4" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label for="location" class="font-bold mb-2">Location: </label>
+                        <input id="location" name="location" [(ngModel)]="location" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                    <div class="mb-4">
+                        <label for="birthday" class="font-bold mb-2">Birthday: </label>
+                        <input id="birthday" name="birthday" [(ngModel)]="birthday" type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                    <div class="mb-4">
+                        <label for="gender" class="font-bold mb-2">Gender: </label>
+                        <select id="gender" name="gender" [(ngModel)]="gender" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            <option value="M">Male</option>
+                            <option value="F">Female</option>
+                            <option value="O">Other</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label for="marital_status" class="font-bold mb-2">Marital Status: </label>
+                        <select id="marital_status" name="marital_status" [(ngModel)]="marital_status" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            <option value="S">Single</option>
+                            <option value="M">Married</option>
+                            <option value="D">Divorced</option>
+                            <option value="W">Widowed</option>
+                        </select>
+                    </div>
+                    <div class="flex justify-center">
+                        <button type="submit" class="bg-white text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4">Update Profile</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="!userProfile">
+    <div class="bg-gray-700 text-white min-h-screen flex-col">
+        <h2 class="text-center text-2xl font-bold py-4">User profile does not exist!</h2>
+    </div>
+</ng-container>

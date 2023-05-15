@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/common/services/api.service.service';
 import { AddMovieDto, Movie } from '../models/movie.models';
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { SharedDataService } from 'src/app/common/services/shared-data.service.service';
 
@@ -19,16 +19,10 @@ export class MovieAddComponent implements OnInit {
   description?: string;
   pgRating?: string;
 
-  origin = "";
-  currentPage: number = 0;
-  pageSize: number = 200;
-
   constructor(private apiSvc: ApiService, private router: Router, private toastr: ToastrService, private activatedRoute: ActivatedRoute, private sharedData: SharedDataService) {}
 
   ngOnInit(): void {
-    this.currentPage = parseInt(this.activatedRoute.snapshot.queryParamMap.get('currentPage')!, 10);
-    this.pageSize = parseInt(this.activatedRoute.snapshot.queryParamMap.get('pageSize')!, 10);
-    this.origin = this.activatedRoute.snapshot.queryParamMap.get('origin')!;
+
   }
 
   addMovie() {
@@ -76,7 +70,10 @@ export class MovieAddComponent implements OnInit {
         this.toastr.success('The movie was succesfully added!', '', {timeOut: 3000});
         this.goBack();
       },
-      (err) => {this.toastr.error('Something went wrong while adding the movie!', '', {timeOut: 10000});});
+      (err) => {
+        this.toastr.error('Something went wrong while adding the movie!', '', {timeOut: 10000});
+        console.log(err);
+      });
     }
     else {
       this.toastr.error('All fields must be filled!', '', {timeOut: 3000});

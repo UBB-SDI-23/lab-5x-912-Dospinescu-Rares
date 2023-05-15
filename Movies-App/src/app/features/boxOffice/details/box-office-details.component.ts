@@ -5,6 +5,7 @@ import { BoxOffice, BoxOfficeWithHighestScore, UpdateBoxOfficeDto } from '../mod
 import { ToastrService } from 'ngx-toastr';
 import { SharedDataService } from 'src/app/common/services/shared-data.service.service';
 import { MovieWithRating } from '../../movies/models/movie.models';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-box-office-details',
@@ -110,6 +111,19 @@ export class BoxOfficeDetailsComponent {
   goToMovieDetails(movieId: string) {
     this.sharedData.addUrl(`/boxOffice/${this.boxOfficeId}`)
     this.router.navigateByUrl(`/movies/${movieId}`);
+  }
+
+  goToUserDetails(userId: string) {
+    this.sharedData.addUrl(`/boxOffice/${this.boxOfficeId}`);
+    this.router.navigateByUrl(`/user/profile/${userId}`);
+  }
+
+  hasPermission(boxOffice: BoxOfficeWithHighestScore): Observable<boolean> {
+    return this.apiSvc.hasPermission(boxOffice.user);
+  }
+
+  isLoggedIn(): Observable<boolean> {
+    return this.apiSvc.isLoggedIn();
   }
 
   goBack() {

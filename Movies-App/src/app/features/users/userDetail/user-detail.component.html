@@ -1,0 +1,63 @@
+<ng-container *ngIf="user">
+    <div class="min-h-screen flex-col bg-gray-700 text-white">
+        <button (click)="goBack()" class="absolute text-white font-bold py-2 px-4 text-md rounded focus:outline-none focus:shadow-outline hover:bg-gray-900 mt-3 mx-2">Go Back</button>
+        <button (click)="goToUserProfile()" class="absolute right-0 text-white font-bold py-2 px-4 text-md rounded focus:outline-none focus:shadow-outline hover:bg-gray-900 mt-3 mx-2">Go To Profile</button>
+        <h2 class="text-center text-2xl font-bold py-4">Details for user "{{user.username}}"</h2>
+        <div class="relative overflow-x-auto">
+            <table class="w-full text-sm text-left">
+                <thead class="text-xs text-center uppercase bg-gray-800">
+                    <tr>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Username</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Email</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Role</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    <tr class="border-b dark:border-gray-700 bg-gray-800 dark:bg-gray-700">
+                        <td class="border-2 border-gray-900 px-4 py-2">{{user.username}}</td>
+                        <td class="border-2 border-gray-900 px-4 py-2">{{user.email}}</td>
+                        <td class="border-2 border-gray-900 px-4 py-2">{{user.role}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2 [hidden]="(isLoggedIn() | async) === true"  class="text-center text-2xl font-bold py-4 text-red-500">You need to be logged in to be able to edit an account!</h2>
+        <h2 [hidden]="(hasPermission(user) | async) === true || (isLoggedIn() | async) === false" class="text-center text-2xl font-bold py-4 text-red-500">You cannot edit someone else's account as a regular user!</h2>
+        <div [hidden]="(hasPermission(user) | async) === false" class="container mx-auto max-w-md">
+            <form (submit)="updateUser()" class="flex justify-center flex-col mt-4">
+                <h2 class="text-center text-2xl font-bold mb-6">You can edit the details of the account underneath!</h2>
+                <div class="flex flex-col">
+                    <div class="mb-4">
+                        <label for="username" class="font-bold mb-2">Username: </label>
+                        <input id="username" name="username" [(ngModel)]="username" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                    <div class="mb-4">
+                        <label for="email" class="font-bold mb-2">Email: </label>
+                        <input id="email" name="email" [(ngModel)]="email" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                    <div [hidden]="(getRole() | async) !== 'admin'" class="mb-4">
+                        <label for="role" class="font-bold mb-2">Role: </label>
+                        <select id="role" name="role" [(ngModel)]="role" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            <option value="regular">Regular</option>
+                            <option value="moderator">Moderator</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                    <div class="flex justify-center">
+                        <button type="submit" class="bg-white text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4">Update User</button>
+                    </div>
+                </div>
+            </form>
+            <div class="flex justify-center">
+                <button (click)="askForConfirmation()" class="bg-red-500 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4">Delete User</button>
+            </div>
+        </div>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="!user">
+    <div class="bg-gray-700 text-white min-h-screen flex-col">
+        <h2 class="text-center text-2xl font-bold py-4">User does not exist!</h2>
+    </div>
+</ng-container>

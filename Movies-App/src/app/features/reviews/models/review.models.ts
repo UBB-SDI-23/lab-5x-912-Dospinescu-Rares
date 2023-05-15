@@ -1,7 +1,9 @@
 import { Movie, MovieWithRating } from "../../movies/models/movie.models"
+import { User } from "../../users/models/user.models";
 
 export interface Review {
     "id": string,
+    "user": User;
     "author": string,
     "date_added": string,
     "score": string,
@@ -12,6 +14,7 @@ export interface Review {
 
 export interface ReviewsWithTotal {
     "id": string,
+    "user": User;
     "author": string,
     "date_added": string,
     "score": string,

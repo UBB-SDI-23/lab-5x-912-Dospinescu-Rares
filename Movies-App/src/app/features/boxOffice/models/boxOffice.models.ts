@@ -1,7 +1,9 @@
 import { MovieWithRating } from "../../movies/models/movie.models";
+import { User } from "../../users/models/user.models";
 
 export interface BoxOffice {
     "id": string,
+    "user": User;
     "budget_in_millions": string,
     "lifetime_gross_in_millions": string,
     "distributor": string,
@@ -11,6 +13,7 @@ export interface BoxOffice {
 
 export interface BoxOfficeWithHighestScore {
     "id": string,
+    "user": User;
     "budget_in_millions": string,
     "lifetime_gross_in_millions": string,
     "distributor": string,

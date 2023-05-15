@@ -4,6 +4,7 @@ import { ApiService } from 'src/app/common/services/api.service.service';
 import { AddActorDto, Actor, ActorWithHours } from '../models/actors.models';
 import { ToastrService } from 'ngx-toastr';
 import { SharedDataService } from 'src/app/common/services/shared-data.service.service';
+import { Observable } from 'rxjs';
  
 @Component({
   selector: 'app-actors-details',
@@ -54,6 +55,11 @@ export class ActorsDetailsComponent implements OnInit{
     });
   }
 
+  goToUserDetails(userId: string) {
+    this.sharedData.addUrl(`/actors/${this.actorId}`);
+    this.router.navigateByUrl(`/user/profile/${userId}`);
+  }
+
   updateActor() {
     if (this.first_name && this.last_name && this.description && this.day_of_birth && this.place_of_birth) {
       if (this.first_name.length > 100) {
@@ -100,6 +106,14 @@ export class ActorsDetailsComponent implements OnInit{
     else {
       this.toastr.error('All fields must be filled!', '', {timeOut: 3000});
     }
+  }
+
+  hasPermission(actor: ActorWithHours): Observable<boolean> {
+    return this.apiSvc.hasPermission(actor.user);
+  }
+
+  isLoggedIn(): Observable<boolean> {
+    return this.apiSvc.isLoggedIn();
   }
 
   goBack() {

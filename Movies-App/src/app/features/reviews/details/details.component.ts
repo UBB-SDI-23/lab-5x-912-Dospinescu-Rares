@@ -5,6 +5,7 @@ import { Review, ReviewsWithTotal, UpdateReviewDto } from '../models/review.mode
 import { ToastrService } from 'ngx-toastr';
 import { SharedDataService } from 'src/app/common/services/shared-data.service.service';
 import { MovieWithRating } from '../../movies/models/movie.models';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-details',
@@ -55,6 +56,11 @@ export class ReviewDetailsComponent implements OnInit{
     });
   }
 
+  goToUserDetails(userId: string) {
+    this.sharedData.addUrl(`/reviews/${this.review}`);
+    this.router.navigateByUrl(`/user/profile/${userId}`);
+  }
+
   updateReview() {
     if (this.author && this.score && this.description && this.recommended) {
       if (this.author.length > 100) {
@@ -96,6 +102,14 @@ export class ReviewDetailsComponent implements OnInit{
     }
   }
 
+  hasPermission(review: ReviewsWithTotal): Observable<boolean> {
+    return this.apiSvc.hasPermission(review.user);
+  }
+
+  isLoggedIn(): Observable<boolean> {
+    return this.apiSvc.isLoggedIn();
+  }
+  
   goToMovieDetails(movieId: string) {
     this.sharedData.addUrl(`/reviews/${this.reviewId}`)
     this.router.navigateByUrl(`/movies/${movieId}`);

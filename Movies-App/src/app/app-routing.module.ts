@@ -19,6 +19,14 @@ import { BoxOfficeDetailsComponent } from './features/boxOffice/details/box-offi
 import { MoviesAndActorsOverviewComponent } from './features/moviesAndActors/overview/movies-and-actors-overview.component';
 import { MoviesAndActorsAddComponent } from './features/moviesAndActors/add/movies-and-actors-add.component';
 import { MoviesAndActorsDetailsComponent } from './features/moviesAndActors/details/movies-and-actors-details.component';
+import { LoginComponent } from './features/users/login/login.component';
+import { PopulateDataComponent } from './features/users/populateData/populate-data.component';
+import { RegisterComponent } from './features/users/register/register.component';
+import { RegisterConfirmComponent } from './features/users/registerConfirm/register-confirm.component';
+import { SetDefaultPageSizeComponent } from './features/users/setDefaultPageSize/set-default-page-size.component';
+import { UserDetailComponent } from './features/users/userDetail/user-detail.component';
+import { UserProfileDetailComponent } from './features/users/userProfileDetail/user-profile-detail.component';
+import { UsersOverviewComponent } from './features/users/userOverview/users-overview.component';
 
 const routes: Routes = [
   {
@@ -96,6 +104,38 @@ const routes: Routes = [
   {
     path: "moviesandactors/:id",
     component: MoviesAndActorsDetailsComponent
+  },
+  {
+    path: "login",
+    component: LoginComponent
+  },
+  {
+    path: "populate",
+    component: PopulateDataComponent
+  },
+  {
+    path: "register",
+    component: RegisterComponent
+  },
+  {
+    path: "register/confirm",
+    component: RegisterConfirmComponent
+  },
+  {
+    path: "page/size",
+    component: SetDefaultPageSizeComponent
+  },
+  {
+    path: "users",
+    component: UsersOverviewComponent
+  },
+  {
+    path: "user/:id",
+    component: UserDetailComponent
+  },
+  {
+    path: "user/profile/:id",
+    component: UserProfileDetailComponent
   },
 ];
 

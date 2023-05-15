@@ -6,6 +6,7 @@
             <table class="w-full text-sm text-left">
                 <thead class="text-xs text-center uppercase bg-gray-800">
                     <tr>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">Added By</th>
                         <th scope="col" class="border-2 border-gray-900 px-4 py-2">Title</th>
                         <th scope="col" class="border-2 border-gray-900 px-4 py-2">Release Date</th>
                         <th scope="col" class="border-2 border-gray-900 px-4 py-2">Duration in Minutes</th>
@@ -16,57 +17,58 @@
                 </thead>
                 <tbody class="text-center">
                     <tr class="border-b dark:border-gray-700 bg-gray-800 dark:bg-gray-700">
+                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToUserDetails(movie.user.id)">{{movie.user.username}}</a></td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{movie.title}}</td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{movie.release_date}}</td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{movie.duration_in_minutes}}</td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{movie.description}}</td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{movie.pgRating}}</td>
-                        <td class="border-2 border-gray-900 px-4 py-2">{{movie.avg_score}}</td>
+                        <td class="border-2 border-gray-900 px-4 py-2">{{movie.avg_score | number:'1.0-1'}}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
         <ng-container *ngIf="reviews?.length !== 0">
-            <h2 class="text-center text-2xl font-bold py-4">Underneath you can see the reviews!</h2>
+            <h2 class="text-center text-2xl font-bold py-4">Underneath you can see the reviews for this movie!</h2>
             <div class="relative overflow-x-auto">
                 <table class="w-full text-sm text-left text-white">
                     <thead class="text-xs text-white text-center uppercase bg-gray-800">
                         <tr>
                             <th scope="col" class="border-2 border-gray-900 px-4 py-2">Index</th>
+                            <th scope="col" class="border-2 border-gray-900 px-4 py-2">Added By</th>
                             <th scope="col" class="border-2 border-gray-900 px-4 py-2">Author</th>
                             <th scope="col" class="border-2 border-gray-900 px-4 py-2">Date Added</th>
                             <th scope="col" class="border-2 border-gray-900 px-4 py-2">Description</th>
-                            <th scope="col" class="border-2 border-gray-900 px-4 py-2">Movie Reviewed</th>
                             <th scope="col" class="border-2 border-gray-900 px-4 py-2">Review Type</th>
                             <th scope="col" class="border-2 border-gray-900 px-4 py-2">Score</th>
-                            <th scope="col" class="border-2 border-gray-900 px-4 py-2">Total Reviews Of The Movie</th>
                         </tr>
                     </thead>
                     <tbody class="text-center">
                         <tr *ngFor="let review of reviews; let i = index" 
                         [ngClass]="{'bg-gray-700 hover:bg-gray-500': i % 2 === 0, 'bg-gray-800 hover:bg-gray-600': i % 2 !== 0}">
-                            <td class="border-2 border-gray-900 px-4 py-2"><a (click)="goToReviewDetails(review.id)">{{i+1}}</a></td>
-                            <td class="border-2 border-gray-900 px-4 py-2"><a (click)="goToReviewDetails(review.id)">{{review.author}}</a></td>
+                            <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToReviewDetails(review.id)">{{i+1}}</a></td>
+                            <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToUserDetails(review.user.id)">{{review.user.username}}</a></td>
+                            <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToReviewDetails(review.id)">{{review.author}}</a></td>
                             <td class="border-2 border-gray-900 px-4 py-2">{{review.date_added}}</td>
                             <td class="border-2 border-gray-900 px-4 py-2">{{review.description}}</td>
-                            <td class="border-2 border-gray-900 px-4 py-2">{{review.movie_reviewed.title}}</td>
                             <td class="border-2 border-gray-900 px-4 py-2">
                                 <span *ngIf="review.recommended === 'Y'" class="text-green-500">Positive Review</span>
                                 <span *ngIf="review.recommended === 'N'" class="text-red-500">Negative Review</span></td>
                             <td class="border-2 border-gray-900 px-4 py-2">{{review.score}}</td>
-                            <td class="border-2 border-gray-900 px-4 py-2">{{review.total_reviews}}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </ng-container>
         <ng-container *ngIf="reviews?.length === 0">
-            <h2 class="text-center text-2xl font-bold py-4 text-red-500">This movies has no reviews of this movie!</h2>
+            <h2 class="text-center text-2xl font-bold py-4 text-red-500">This movies has no reviews!</h2>
         </ng-container>
 
 
-        <div class="container mx-auto max-w-md">
+        <h2 [hidden]="(isLoggedIn() | async) === true"  class="text-center text-2xl font-bold py-4 text-red-500">You need to be logged in to be able to edit a movie!</h2>
+        <h2 [hidden]="(hasPermission(movie) | async) === true || (isLoggedIn() | async) === false" class="text-center text-2xl font-bold py-4 text-red-500">You cannot edit someone else's movie as a regular user!</h2>
+        <div [hidden]="(hasPermission(movie) | async) === false" class="container mx-auto max-w-md">
             <form (submit)="updateMovie()" class="flex justify-center flex-col">
                 <h2 class="text-2xl mb-4 mt-4 self-center">You can edit the movie underneath!</h2>
                 <div class="flex flex-col">
@@ -86,10 +88,14 @@
                         <label for="description" class="text-white font-bold mb-2">Description: </label>
                         <textarea id="description" name="description" [(ngModel)]="description" type="text" rows="4" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
                     </div>
-                    <div class="mb-4">
-                        <label for="pgRating" class="text-white font-bold mb-2">PG Rating: </label>
-                        <input id="pgRating" name="pgRating" [(ngModel)]="pgRating" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                    </div>
+                    <label for="pgRating" class="font-bold mb-2">PG Rating: </label>
+                        <select id="pgRating" name="pgRating" [(ngModel)]="pgRating" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            <option value="G">G</option>
+                            <option value="PG">PG</option>
+                            <option value="PG-13">PG-13</option>
+                            <option value="R">R</option>
+                            <option value="NC-17">NC-17</option>
+                        </select>
                     <div class="flex flex-col justify-center items-center">
                         <button type="submit" class="bg-white hover:bg-blue-200 text-gray-800 font-bold py-2 px-4 rounded mb-4 focus:outline-none focus:shadow-outline">Update Movie</button>
                     </div>
@@ -104,6 +110,6 @@
 
 <ng-container *ngIf="!movie">
     <div class="bg-gray-700 text-white min-h-screen flex-col">
-        <h2 class="text-center text-2xl font-bold py-4">Movie does not exist!</h2>
+        <h2 class="text-center text-2xl font-bold py-4 text-red-500">Movie does not exist!</h2>
     </div>
 </ng-container>
