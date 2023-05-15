@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   constructor(private apiSvc: ApiService, private toastr: ToastrService, private sharedData: SharedDataService) {}
 
   ngOnInit(): void {
-    console.log(document.cookie);
+
   }
 
   logIn() {

@@ -21,18 +21,46 @@ export class ApiService {
   private roleSubject = new BehaviorSubject<string>('');
   private idSubject = new BehaviorSubject<number>(0);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.loadState();
+  }
+
+  private saveState(username: string, role: string, id: number): void {
+    localStorage.setItem('usernameSubject', JSON.stringify(username));
+    localStorage.setItem('roleSubject', JSON.stringify(role));
+    localStorage.setItem('idSubject', JSON.stringify(id));
+  }
+
+  private clearState(): void {
+    localStorage.removeItem('usernameSubject');
+    localStorage.removeItem('roleSubject');
+    localStorage.removeItem('idSubject');
+  }
+
+  private loadState(): void {
+    const savedUsername = localStorage.getItem('usernameSubject');
+    const savedRole = localStorage.getItem('roleSubject');
+    const savedId = localStorage.getItem('idSubject');
+
+    if (savedUsername && savedRole && savedId) {
+      this.usernameSubject.next(JSON.parse(savedUsername));
+      this.roleSubject.next(JSON.parse(savedRole));
+      this.idSubject.next(JSON.parse(savedId));
+    }
+  }
 
   fill(username: string, role: string, id: number): void {
     this.usernameSubject.next(username);
     this.roleSubject.next(role);
     this.idSubject.next(id);
+    this.saveState(username, role, id);
   }
 
   empty(): void {
     this.usernameSubject.next('');
     this.roleSubject.next('');
     this.idSubject.next(0);
+    this.clearState();
   }
 
   isLoggedIn(): Observable<boolean> {
