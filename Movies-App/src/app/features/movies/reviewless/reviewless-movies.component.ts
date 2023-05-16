@@ -111,6 +111,21 @@ export class ReviewlessMoviesComponent implements OnInit {
     }
   }
 
+  setAllCheckboxes() {
+    const bulkCheckbox = document.querySelector('input[name="bulk"]') as HTMLInputElement;
+    const isChecked = bulkCheckbox.checked;
+
+    const checkboxes = document.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
+    checkboxes.forEach((checkbox: HTMLInputElement) => {
+      if (checkbox.checked === !isChecked) {
+        checkbox.checked = isChecked;
+
+        const event = new Event('change', { bubbles: true});
+        checkbox.dispatchEvent(event);
+      }
+    })
+  }
+
   askForConfirmation(i:number, movieId: string) {
     const toastrRef = this.toastr.warning(`Click here to confirm you wish to delete the movie at index ${i+1}!`, '', {
       timeOut: 5000,

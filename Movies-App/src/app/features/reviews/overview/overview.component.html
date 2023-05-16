@@ -33,17 +33,20 @@
                         <th scope="col" class="border-2 border-gray-900 px-4 py-2">Score</th>
                         <th scope="col" class="border-2 border-gray-900 px-4 py-2">Total Reviews Of The Movie</th>
                         <th scope="col" class="border-2 border-gray-900 px-4 py-2">Operations</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">
+                            <input [hidden]="(getRole() | async) !== 'admin'" type="checkbox" name="bulk" (change)="setAllCheckboxes()" class="h-6 w-6"/>
+                        </th>
                     </tr>
                 </thead>
                 <tbody class="text-center">
                     <tr *ngFor="let review of reviews; let i = index" 
                     [ngClass]="{'bg-gray-700 hover:bg-gray-500': i % 2 === 0, 'bg-gray-800 hover:bg-gray-600': i % 2 !== 0}">
-                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToReviewDetails(review.id)">{{i+1}}</a></td>
-                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToUserDetails(review.user.id)">{{review.user.username}}</a></td>
-                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToReviewDetails(review.id)">{{review.author}}</a></td>
+                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToReviewDetails(review.id)" class="cursor-pointer">{{i+1}}</a></td>
+                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToUserDetails(review.user.id)" class="cursor-pointer">{{review.user.username}}</a></td>
+                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToReviewDetails(review.id)" class="cursor-pointer">{{review.author}}</a></td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{review.date_added}}</td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{review.description}}</td>
-                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToMovieDetails(review.movie_reviewed.id)">{{review.movie_reviewed.title}}</a></td>
+                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToMovieDetails(review.movie_reviewed.id)" class="cursor-pointer">{{review.movie_reviewed.title}}</a></td>
                         <td class="border-2 border-gray-900 px-4 py-2">
                             <span *ngIf="review.recommended === 'Y'" class="text-green-500">Positive Review</span>
                             <span *ngIf="review.recommended === 'N'" class="text-red-500">Negative Review</span></td>
@@ -51,10 +54,12 @@
                         <td class="border-2 border-gray-900 px-4 py-2">{{review.total_reviews}}</td>
                         <td class="border-2 border-gray-900 px-4 py-2">
                             <div class="container mx-auto flex justify-center items-center space-x-2">
-                                <input [hidden]="(getRole() | async) !== 'admin'" type="checkbox" (change)="checkboxChanged(review.id)" class="h-6 w-6"/>
-                                <a (click)="goToReviewDetails(review.id)"><img src="/assets/img/Details.png" alt="editButton" class="w-6 h-6"></a>
-                                <a [hidden]="(hasPermission(review) | async) === false" (click)="askForConfirmation(i, review.id)"><img src="/assets/img/Delete.png" alt="deleteButton" class="w-6 h-6"></a>
+                                <a (click)="goToReviewDetails(review.id)"><img src="/assets/img/Details.png" alt="editButton" class="cursor-pointer w-6 h-6"></a>
+                                <a [hidden]="(hasPermission(review) | async) === false" (click)="askForConfirmation(i, review.id)"><img src="/assets/img/Delete.png" alt="deleteButton" class="cursor-pointer w-6 h-6"></a>
                             </div>                          
+                        </td>
+                        <td class="border-2 border-gray-900 px-4 py-2">
+                            <input [hidden]="(getRole() | async) !== 'admin'" type="checkbox" (change)="checkboxChanged(review.id)" class="w-6 h-6"/>
                         </td>
                     </tr>
                 </tbody>

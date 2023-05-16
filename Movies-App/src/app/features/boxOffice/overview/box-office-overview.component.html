@@ -32,25 +32,30 @@
                         <th scope="col" class="border-2 border-gray-900 px-4 py-2">Description</th>
                         <th scope="col" class="border-2 border-gray-900 px-4 py-2">Highest Score Of The Movie</th>
                         <th scope="col" class="border-2 border-gray-900 px-4 py-2">Operations</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">
+                            <input [hidden]="(getRole() | async) !== 'admin'" type="checkbox" name="bulk" (change)="setAllCheckboxes()" class="h-6 w-6"/>
+                        </th>
                     </tr>
                 </thead>
                 <tbody class="text-center">
                     <tr *ngFor="let office of boxOffices; let i = index" 
                     [ngClass]="{'bg-gray-700 hover:bg-gray-500': i % 2 === 0, 'bg-gray-800 hover:bg-gray-600': i % 2 !== 0}">
-                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToBoxOfficeDetails(office.id)">{{i+1}}</a></td>
-                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToUserDetails(office.user.id)">{{office.user.username}}</a></td>
+                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToBoxOfficeDetails(office.id)" class="cursor-pointer">{{i+1}}</a></td>
+                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToUserDetails(office.user.id)" class="cursor-pointer">{{office.user.username}}</a></td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{office.budget_in_millions | number: '1.0-0': 'en-US' }}</td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{office.lifetime_gross_in_millions | number: '1.0-0': 'en-US' }}</td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{office.distributor}}</td>
-                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToMovieDetails(office.movie_referenced.id)">{{office.movie_referenced.title}}</a></td>
+                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToMovieDetails(office.movie_referenced.id)" class="cursor-pointer">{{office.movie_referenced.title}}</a></td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{office.description}}</td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{office.highest_score}}</td>
                         <td class="border-2 border-gray-900 px-4 py-2">
                             <div class="container mx-auto flex justify-center items-center space-x-2">
-                                <input [hidden]="(getRole() | async) !== 'admin'" type="checkbox" (change)="checkboxChanged(office.id)" class="h-6 w-6"/>
-                                <a (click)="goToBoxOfficeDetails(office.id)"><img src="/assets/img/Details.png" alt="editButton" class="w-6 h-6"></a>
-                                <a [hidden]="(hasPermission(office) | async) === false" (click)="askForConfirmation(i, office.id)"><img src="/assets/img/Delete.png" alt="deleteButton" class="w-6 h-6"></a>
+                                <a (click)="goToBoxOfficeDetails(office.id)"><img src="/assets/img/Details.png" alt="editButton" class="cursor-pointer w-6 h-6"></a>
+                                <a [hidden]="(hasPermission(office) | async) === false" (click)="askForConfirmation(i, office.id)"><img src="/assets/img/Delete.png" alt="deleteButton" class="cursor-pointer w-6 h-6"></a>
                             </div>                          
+                        </td>
+                        <td class="border-2 border-gray-900 px-4 py-2">
+                            <input [hidden]="(getRole() | async) !== 'admin'" type="checkbox" (change)="checkboxChanged(office.id)" class="w-6 h-6"/>
                         </td>
                     </tr>
                 </tbody>

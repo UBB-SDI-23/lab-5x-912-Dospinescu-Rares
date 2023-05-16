@@ -92,6 +92,21 @@ export class MoviesByRatingComponent implements OnInit {
     }
   }
 
+  setAllCheckboxes() {
+    const bulkCheckbox = document.querySelector('input[name="bulk"]') as HTMLInputElement;
+    const isChecked = bulkCheckbox.checked;
+
+    const checkboxes = document.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
+    checkboxes.forEach((checkbox: HTMLInputElement) => {
+      if (checkbox.checked === !isChecked) {
+        checkbox.checked = isChecked;
+
+        const event = new Event('change', { bubbles: true});
+        checkbox.dispatchEvent(event);
+      }
+    })
+  }
+
   deleteMovie(movieId: string) {
     this.apiSvc.deleteMovie(movieId).subscribe((movie: Movie) => {
       this.toastr.success(`The movie was succesfully deleted!`, '', {timeOut: 3000});

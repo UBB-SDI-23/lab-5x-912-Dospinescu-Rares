@@ -31,24 +31,29 @@
                         <th scope="col" class="border-2 border-gray-900 px-4 py-2">Director Notes</th>
                         <th scope="col" class="border-2 border-gray-900 px-4 py-2">Total Positive Reviews Of The Movie</th>
                         <th scope="col" class="border-2 border-gray-900 px-4 py-2">Operations</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">
+                            <input [hidden]="(getRole() | async) !== 'admin'" type="checkbox" name="bulk" (change)="setAllCheckboxes()" class="h-6 w-6"/>
+                        </th>
                     </tr>
                 </thead>
                 <tbody class="text-center">
                     <tr *ngFor="let relation of relations; let i = index" 
                     [ngClass]="{'bg-gray-700 hover:bg-gray-500': i % 2 === 0, 'bg-gray-800 hover:bg-gray-600': i % 2 !== 0}">
-                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToMoviesAndActorsDetails(relation.id)">{{i+1}}</a></td>
-                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToUserDetails(relation.user.id)">{{relation.user.username}}</a></td>
-                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToMovieDetails(relation.movie.id)">{{relation.movie.title}}</a></td>
-                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToActorDetails(relation.actor.id)">{{relation.actor.first_name}} {{relation.actor.last_name}}</a></td>
+                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToMoviesAndActorsDetails(relation.id)" class="cursor-pointer">{{i+1}}</a></td>
+                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToUserDetails(relation.user.id)" class="cursor-pointer">{{relation.user.username}}</a></td>
+                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToMovieDetails(relation.movie.id)" class="cursor-pointer">{{relation.movie.title}}</a></td>
+                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToActorDetails(relation.actor.id)" class="cursor-pointer">{{relation.actor.first_name}} {{relation.actor.last_name}}</a></td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{relation.total_hours_filmed | number: '1.0-0': 'en-US' }}</td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{relation.director_notes}}</td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{relation.positive_reviews}}</td>
                         <td class="border-2 border-gray-900 px-4 py-2">
                             <div class="container mx-auto flex justify-center items-center space-x-2">
-                                <input [hidden]="(getRole() | async) !== 'admin'" type="checkbox" (change)="checkboxChanged(relation.id)" class="h-6 w-6"/>
-                                <a (click)="goToMoviesAndActorsDetails(relation.id)"><img src="/assets/img/Details.png" alt="editButton" class="w-6 h-6"></a>
-                                <a [hidden]="(hasPermission(relation) | async) === false" (click)="askForConfirmation(i, relation.id)"><img src="/assets/img/Delete.png" alt="deleteButton" class="w-6 h-6"></a>
+                                <a (click)="goToMoviesAndActorsDetails(relation.id)"><img src="/assets/img/Details.png" alt="editButton" class="cursor-pointer w-6 h-6"></a>
+                                <a [hidden]="(hasPermission(relation) | async) === false" (click)="askForConfirmation(i, relation.id)"><img src="/assets/img/Delete.png" alt="deleteButton" class="cursor-pointer w-6 h-6"></a>
                             </div>                          
+                        </td>
+                        <td class="border-2 border-gray-900 px-4 py-2">
+                            <input [hidden]="(getRole() | async) !== 'admin'" type="checkbox" (change)="checkboxChanged(relation.id)" class="w-6 h-6"/>
                         </td>
                     </tr>
                 </tbody>

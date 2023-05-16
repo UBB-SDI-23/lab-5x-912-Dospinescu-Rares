@@ -101,7 +101,7 @@ export class MoviesAndActorsDetailsComponent implements OnInit{
 
   goToActorDetails(actorId: string) {
     this.sharedData.addUrl(`/moviesandactors/${this.moviesAndActorsId}`)
-    this.router.navigateByUrl(`/actor/${actorId}`);
+    this.router.navigateByUrl(`/actors/${actorId}`);
   }
 
   hasPermission(relation: MoviesAndActorsWithPositive): Observable<boolean> {

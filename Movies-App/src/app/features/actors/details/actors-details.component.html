@@ -17,7 +17,7 @@
                 </thead>
                 <tbody class="text-center">
                     <tr class="border-b dark:border-gray-700 bg-gray-800 dark:bg-gray-700">
-                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToUserDetails(actor.user.id)">{{actor.user.username}}</a></td>
+                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToUserDetails(actor.user.id)" class="cursor-pointer">{{actor.user.username}}</a></td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{actor.first_name}}</td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{actor.last_name}}</td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{actor.description}}</td>
@@ -61,7 +61,7 @@
                 </div>    
             </form>
             <div class="flex justify-center">
-                <button (click)="askForConfirmation(actor.id)" class="bg-red-500 hover:bg-red-900 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Delete Actor</button>
+                <button (click)="askForConfirmation(actor.id)" class="bg-red-500 hover:bg-red-900 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4">Delete Actor</button>
             </div>
         </div>
     </div>

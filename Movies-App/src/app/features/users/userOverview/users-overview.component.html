@@ -25,21 +25,26 @@
                         <th scope="col" class="border-2 border-gray-900 px-4 py-2">Email</th>
                         <th scope="col" class="border-2 border-gray-900 px-4 py-2">Role</th>
                         <th scope="col" class="border-2 border-gray-900 px-4 py-2">Operations</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">
+                            <input [hidden]="(getRole() | async) !== 'admin'" type="checkbox" name="bulk" (change)="setAllCheckboxes()" class="h-6 w-6"/>
+                        </th>
                     </tr>
                 </thead>
                 <tbody class="text-center">
                     <tr *ngFor="let user of users; let i = index" 
                     [ngClass]="{'bg-gray-700 hover:bg-gray-500': i % 2 === 0, 'bg-gray-800 hover:bg-gray-600': i % 2 !== 0}">
-                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToUserDetails(user.id)">{{i+1}}</a></td>
-                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToUserDetails(user.id)">{{user.username}}</a></td>
+                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToUserDetails(user.id)" class="cursor-pointer">{{i+1}}</a></td>
+                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToUserDetails(user.id)" class="cursor-pointer">{{user.username}}</a></td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{user.email}}</td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{user.role}}</td>
                         <td class="border-2 border-gray-900 px-4 py-2">
                             <div class="container mx-auto flex justify-center items-center space-x-2">
-                                <input [hidden]="(getRole() | async) !== 'admin'" type="checkbox" (change)="checkboxChanged(user.id)" class="h-6 w-6"/>
-                                <a (click)="goToUserDetails(user.id)"><img src="/assets/img/Details.png" alt="editButton" class="w-6 h-6"></a>
-                                <a (click)="askForConfirmation(i, user.id)"><img src="/assets/img/Delete.png" alt="deleteButton" class="w-6 h-6"></a>
+                                <a (click)="goToUserDetails(user.id)"><img src="/assets/img/Details.png" alt="editButton" class="cursor-pointer w-6 h-6"></a>
+                                <a (click)="askForConfirmation(i, user.id)"><img src="/assets/img/Delete.png" alt="deleteButton" class="cursor-pointer w-6 h-6"></a>
                             </div>                          
+                        </td>
+                        <td class="border-2 border-gray-900 px-4 py-2">
+                            <input [hidden]="(getRole() | async) !== 'admin'" type="checkbox" (change)="checkboxChanged(user.id)" class="w-6 h-6"/>
                         </td>
                     </tr>
                 </tbody>

@@ -18,11 +18,11 @@
                 </thead>
                 <tbody class="text-center">
                     <tr class="border-b dark:border-gray-700 bg-gray-800 dark:bg-gray-700">
-                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToUserDetails(review.user.id)">{{review.user.username}}</a></td>
+                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToUserDetails(review.user.id)" class="cursor-pointer">{{review.user.username}}</a></td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{review.author}}</td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{review.date_added}}</td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{review.description}}</td>
-                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToMovieDetails(review.movie_reviewed.id)">{{review.movie_reviewed.title}}</a></td>
+                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToMovieDetails(review.movie_reviewed.id)" class="cursor-pointer">{{review.movie_reviewed.title}}</a></td>
                         <td class="border-2 border-gray-900 px-4 py-2">
                             <span *ngIf="review.recommended === 'Y'" class="text-green-500">Positive Review</span>
                             <span *ngIf="review.recommended === 'N'" class="text-red-500">Negative Review</span></td>
@@ -64,7 +64,7 @@
                 </div>
             </form>
             <div class="flex justify-center">
-                <button (click)="askForConfirmation()" class="bg-red-500 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Delete Review</button>
+                <button (click)="askForConfirmation()" class="bg-red-500 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4">Delete Review</button>
             </div>
         </div>
     </div>

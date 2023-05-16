@@ -16,9 +16,9 @@
                 </thead>
                 <tbody class="text-center">
                     <tr class="border-b dark:border-gray-700 bg-gray-800 dark:bg-gray-700">
-                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToUserDetails(moviesAndActors.user.id)">{{moviesAndActors.user.username}}</a></td>
-                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToMovieDetails(moviesAndActors.movie.id)">{{moviesAndActors.movie.title}}</a></td>
-                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToActorDetails(moviesAndActors.actor.id)">{{moviesAndActors.actor.first_name}} {{moviesAndActors.actor.last_name}}</a></td>
+                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToUserDetails(moviesAndActors.user.id)" class="cursor-pointer">{{moviesAndActors.user.username}}</a></td>
+                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToMovieDetails(moviesAndActors.movie.id)" class="cursor-pointer">{{moviesAndActors.movie.title}}</a></td>
+                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToActorDetails(moviesAndActors.actor.id)" class="cursor-pointer">{{moviesAndActors.actor.first_name}} {{moviesAndActors.actor.last_name}}</a></td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{moviesAndActors.total_hours_filmed | number: '1.0-0': 'en-US' }}</td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{moviesAndActors.director_notes}}</td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{moviesAndActors.positive_reviews}}</td>
@@ -44,7 +44,7 @@
                 </div>
             </form>
             <div class="flex justify-center">
-                <button (click)="askForConfirmation()" class="bg-red-500 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Delete Relation</button>
+                <button (click)="askForConfirmation()" class="bg-red-500 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4">Delete Relation</button>
             </div>
         </div>
     </div>

@@ -29,14 +29,17 @@
                         <th scope="col" class="border-2 border-gray-900 px-4 py-2">PG Rating</th>
                         <th scope="col" class="border-2 border-gray-900 px-4 py-2">Average Score</th>
                         <th scope="col" class="border-2 border-gray-900 px-4 py-2">Operations</th>
+                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">
+                            <input [hidden]="(getRole() | async) !== 'admin'" type="checkbox" name="bulk" (change)="setAllCheckboxes()" class="h-6 w-6"/>
+                        </th>
                     </tr>
                 </thead>
                 <tbody class="text-center">
                     <tr *ngFor="let movie of moviesByRating; let i = index" 
                     [ngClass]="{'bg-gray-700 hover:bg-gray-500': i % 2 === 0, 'bg-gray-800 hover:bg-gray-600': i % 2 !== 0}">
-                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToMovieDetails(movie.id)">{{i+1}}</a></td>
-                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToUserDetails(movie.user.id)">{{movie.user.username}}</a></td>
-                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToMovieDetails(movie.id)">{{movie.title}}</a></td>
+                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToMovieDetails(movie.id)" class="cursor-pointer">{{i+1}}</a></td>
+                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToUserDetails(movie.user.id)" class="cursor-pointer">{{movie.user.username}}</a></td>
+                        <td class="border-2 border-gray-900 px-4 py-2 text-cyan-400"><a (click)="goToMovieDetails(movie.id)" class="cursor-pointer">{{movie.title}}</a></td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{movie.release_date}}</td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{movie.duration_in_minutes}}</td>
                         <td class="border-2 border-gray-900 px-4 py-2">{{movie.description}}</td>
@@ -44,10 +47,12 @@
                         <td class="border-2 border-gray-900 px-4 py-2">{{movie.avg_score | number:'1.0-1'}}</td>
                         <td class="border-2 border-gray-900 px-4 py-2">
                             <div class="container mx-auto flex justify-center items-center space-x-2">
-                                <input [hidden]="(getRole() | async) !== 'admin'" type="checkbox" (change)="checkboxChanged(movie.id)" class="h-6 w-6"/>
-                                <a (click)="goToMovieDetails(movie.id)"><img src="/assets/img/Details.png" alt="editButton" class="w-6 h-6"></a>
-                                <a [hidden]="(hasPermission(movie) | async) === false" (click)="askForConfirmation(i, movie.id)"><img src="/assets/img/Delete.png" alt="deleteButton" class="w-6 h-6"></a>
+                                <a (click)="goToMovieDetails(movie.id)"><img src="/assets/img/Details.png" alt="editButton" class="cursor-pointer w-6 h-6"></a>
+                                <a [hidden]="(hasPermission(movie) | async) === false" (click)="askForConfirmation(i, movie.id)"><img src="/assets/img/Delete.png" alt="deleteButton" class="cursor-pointer w-6 h-6"></a>
                             </div>                          
+                        </td>
+                        <td class="border-2 border-gray-900 px-4 py-2">
+                            <input [hidden]="(getRole() | async) !== 'admin'" type="checkbox" (change)="checkboxChanged(movie.id)" class="w-6 h-6"/>
                         </td>
                     </tr>
                 </tbody>
