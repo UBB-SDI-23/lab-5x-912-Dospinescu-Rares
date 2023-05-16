@@ -31,7 +31,7 @@
                         <th scope="col" class="border-2 border-gray-900 px-4 py-2">Director Notes</th>
                         <th scope="col" class="border-2 border-gray-900 px-4 py-2">Total Positive Reviews Of The Movie</th>
                         <th scope="col" class="border-2 border-gray-900 px-4 py-2">Operations</th>
-                        <th scope="col" class="border-2 border-gray-900 px-4 py-2">
+                        <th [hidden]="(getRole() | async) !== 'admin'" scope="col" class="border-2 border-gray-900 px-4 py-2">
                             <input [hidden]="(getRole() | async) !== 'admin'" type="checkbox" name="bulk" (change)="setAllCheckboxes()" class="h-6 w-6"/>
                         </th>
                     </tr>
@@ -52,7 +52,7 @@
                                 <a [hidden]="(hasPermission(relation) | async) === false" (click)="askForConfirmation(i, relation.id)"><img src="/assets/img/Delete.png" alt="deleteButton" class="cursor-pointer w-6 h-6"></a>
                             </div>                          
                         </td>
-                        <td class="border-2 border-gray-900 px-4 py-2">
+                        <td [hidden]="(getRole() | async) !== 'admin'" class="border-2 border-gray-900 px-4 py-2">
                             <input [hidden]="(getRole() | async) !== 'admin'" type="checkbox" (change)="checkboxChanged(relation.id)" class="w-6 h-6"/>
                         </td>
                     </tr>
