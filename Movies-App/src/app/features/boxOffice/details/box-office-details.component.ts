@@ -98,7 +98,7 @@ export class BoxOfficeDetailsComponent {
       }
 
       this.apiSvc.updateBoxOffice(this.boxOfficeId!, boxoffice).subscribe((result: BoxOffice) => {
-        this.toastr.success('The box office was succesfully updated!', '', {timeOut: 3000});
+        this.toastr.success('The box office was successfully updated!', '', {timeOut: 3000});
         this.goBack();
       },
       (err) => {this.toastr.error('Something went wrong while updating the box office!', '', {timeOut: 10000});});

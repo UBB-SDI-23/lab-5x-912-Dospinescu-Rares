@@ -1,5 +1,5 @@
 <div class="bg-gray-700 text-white min-h-screen flex-col">
-    <button [hidden]="(getRole() | async) !== 'admin' || checkboxItems.length === 0" (click)="bulkDelete()" class="absolute right-0 text-red-400 font-bold py-2 px-4 text-md rounded focus:outline-none focus:shadow-outline hover:bg-gray-900 mt-3 mx-2">Bulk Delete</button>
+    <button [hidden]="(getRole() | async) !== 'admin' || checkboxItems.length === 0" (click)="bulkDelete()" class="absolute right-0 text-red-400 font-bold py-2 px-4 text-md rounded focus:outline-none focus:shadow-outline hover:bg-gray-900 mt-3 mx-2">Delete Selected</button>
     <h2 class="text-center text-2xl font-bold py-4">You are currently browsing box offices!</h2>
     <div class="text-center flex justify-center font-bold rounded focus:outline-none focus:shadow-outline mb-4">
         <button [hidden]="(isLoggedIn() | async) === false" (click)="goToAddBoxOfficePage()" class="py-2 px-4 text-md hover:bg-gray-900 rounded">Add Box Office</button>

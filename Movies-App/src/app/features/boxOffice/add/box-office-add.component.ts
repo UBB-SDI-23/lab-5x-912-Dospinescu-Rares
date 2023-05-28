@@ -116,7 +116,7 @@ export class BoxOfficeAddComponent implements OnInit {
         description: this.description,
       }
       this.apiSvc.addBoxOffice(boxOffice).subscribe((result: BoxOffice) => {
-        this.toastr.success('The boxOffice was succesfully added!', '', {timeOut: 3000});
+        this.toastr.success('The boxOffice was successfully added!', '', {timeOut: 3000});
         this.goBack();
       },
       (err: any) => {this.toastr.error('Something went wrong while adding the box office!', '', {timeOut: 10000});});

@@ -129,7 +129,7 @@ export class MoviesAndActorsAddComponent implements OnInit {
         director_notes: this.director_notes,
       }
       this.apiSvc.addMoviesAndActors(moviesAndActors).subscribe((result: MoviesAndActors) => {
-        this.toastr.success('The relation was succesfully added!', '', {timeOut: 3000});
+        this.toastr.success('The relation was successfully added!', '', {timeOut: 3000});
         this.goBack();
       },
       (err: any) => {

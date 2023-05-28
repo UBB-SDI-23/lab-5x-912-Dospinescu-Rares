@@ -65,7 +65,7 @@ export class ActorsAddComponent implements OnInit {
       }
       
       this.apiSvc.addActor(actor).subscribe((result: Actor) => {
-        this.toastr.success('The actor was succesfully added!', '', {timeOut: 3000});
+        this.toastr.success('The actor was successfully added!', '', {timeOut: 3000});
         this.goBack();
       },
       (err) => {this.toastr.error('Something went wrong while adding the actor!', '', {timeOut: 10000});});

@@ -44,7 +44,7 @@ export class ActorsDetailsComponent implements OnInit{
   }
 
   askForConfirmation(actorId: string) {
-    const toastrRef = this.toastr.warning(`Click here to confirm you wish to delete the actor with id ${this.actorId}!`, '', {
+    const toastrRef = this.toastr.warning(`Click here to confirm you wish to delete the actor "${this.first_name} ${this.last_name}"!`, '', {
       timeOut: 5000,
       tapToDismiss: true,
       onActivateTick: true
@@ -96,7 +96,7 @@ export class ActorsDetailsComponent implements OnInit{
       }
 
       this.apiSvc.updateActor(this.actorId!, actor).subscribe((result: Actor) => {
-        this.toastr.success('The actor was succesfully updated!', '', {timeOut: 3000});
+        this.toastr.success('The actor was successfully updated!', '', {timeOut: 3000});
         this.goBack();
       },
       (err) => {

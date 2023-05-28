@@ -97,7 +97,7 @@ export class ReviewAddComponent implements OnInit {
         recommended: this.recommended
       }
       this.apiSvc.addReview(review).subscribe((result: Review) => {
-        this.toastr.success('The review was succesfully added!', '', {timeOut: 3000});
+        this.toastr.success('The review was successfully added!', '', {timeOut: 3000});
         this.goBack();
       },
       (err: any) => {this.toastr.error('Something went wrong while adding the review!', '', {timeOut: 10000});});

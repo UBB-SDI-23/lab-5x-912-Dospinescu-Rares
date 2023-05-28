@@ -92,7 +92,7 @@ export class ReviewDetailsComponent implements OnInit{
       }
 
       this.apiSvc.updateReview(this.reviewId!, review).subscribe((result: Review) => {
-        this.toastr.success('The review was succesfully updated!', '', {timeOut: 3000});
+        this.toastr.success('The review was successfully updated!', '', {timeOut: 3000});
         this.goBack();
       },
       (err) => {this.toastr.error('Something went wrong while updating the review!', '', {timeOut: 10000});});

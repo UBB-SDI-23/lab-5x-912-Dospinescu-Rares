@@ -48,7 +48,7 @@ export class MovieDetailsComponent implements OnInit{
   }
 
   askForConfirmation() {
-    const toastrRef = this.toastr.warning(`Click here to confirm you wish to delete the movie with title "${this.title}!"`, '', {
+    const toastrRef = this.toastr.warning(`Click here to confirm you wish to delete the movie with title "${this.title}"!`, '', {
       timeOut: 5000,
       tapToDismiss: true,
       onActivateTick: true
@@ -111,7 +111,7 @@ export class MovieDetailsComponent implements OnInit{
       }
 
       this.apiSvc.updateMovie(this.movieId!, movie).subscribe((result: Movie) => {
-        this.toastr.success('The movie was succesfully updated!', '', {timeOut: 3000});
+        this.toastr.success('The movie was successfully updated!', '', {timeOut: 3000});
         this.goBack();
       },
       (err) => {this.toastr.error('Something went wrong while updating the movie!', '', {timeOut: 10000});});

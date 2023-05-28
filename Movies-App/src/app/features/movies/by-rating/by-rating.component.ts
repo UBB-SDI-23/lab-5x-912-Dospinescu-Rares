@@ -76,7 +76,7 @@ export class MoviesByRatingComponent implements OnInit {
 
   bulkDelete() {
     this.apiSvc.bulkDelete("movie", this.checkboxItems).subscribe((result: any) => {
-      this.toastr.success(result, '', {timeOut: 3000});
+      this.toastr.success("The bulk delete was successful!", '', {timeOut: 3000});
       this.checkboxItems = [];
       this.loadMovies();
     })

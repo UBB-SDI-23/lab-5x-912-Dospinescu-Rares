@@ -5,13 +5,17 @@ import { Router } from '@angular/router';
 import { SharedDataService } from './common/services/shared-data.service.service';
 import { Observable } from 'rxjs';
 
+interface Message {
+  nickname: string;
+  content: string;
+}
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-
   constructor(private apiSvc: ApiService, private toastr: ToastrService, private router: Router, private sharedData: SharedDataService) {}
 
   ngOnInit(): void {
@@ -47,7 +51,6 @@ export class AppComponent implements OnInit {
     });
     api.unsubscribe();
 
-    this.sharedData.addUrl(`/user/${id}`)
     this.router.navigateByUrl(`/user/${id}`);
   }
 
@@ -58,7 +61,6 @@ export class AppComponent implements OnInit {
     });
     api.unsubscribe();
 
-    this.sharedData.addUrl(`user/profile/${id}`)
     this.router.navigateByUrl(`user/profile/${id}`);
   }
 

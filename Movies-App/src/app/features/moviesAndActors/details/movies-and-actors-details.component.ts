@@ -79,7 +79,7 @@ export class MoviesAndActorsDetailsComponent implements OnInit{
       }
 
       this.apiSvc.updateMoviesAndActors(this.moviesAndActorsId!, moviesAndActors).subscribe((result: MoviesAndActors) => {
-        this.toastr.success('The relation was succesfully updated!', '', {timeOut: 3000});
+        this.toastr.success('The relation was successfully updated!', '', {timeOut: 3000});
         this.goBack();
       },
       (err) => {this.toastr.error('Something went wrong while updating the relation!', '', {timeOut: 10000});});

@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
         this.goBack();
       },
       (err) => {
-        this.toastr.error("Something went wrong while trying to log in!", '', {timeOut: 10000});
+        this.toastr.error("Your username and password are wrong!", '', {timeOut: 10000});
       });
     }
     else {

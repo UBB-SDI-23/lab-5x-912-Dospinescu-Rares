@@ -67,7 +67,7 @@ export class MovieAddComponent implements OnInit {
       }
       
       this.apiSvc.addMovie(movie).subscribe((result: Movie) => {
-        this.toastr.success('The movie was succesfully added!', '', {timeOut: 3000});
+        this.toastr.success('The movie was successfully added!', '', {timeOut: 3000});
         this.goBack();
       },
       (err) => {
